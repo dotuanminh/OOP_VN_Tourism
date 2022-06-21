@@ -53,10 +53,5 @@ public class TouristAttraction implements IDataProcess {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Override
-	public String createFileName() {
-		return "Tourist_Attraction";
-	}
-
 
 }

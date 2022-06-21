@@ -67,11 +67,4 @@ public class Cave extends NaturalAttraction{
 				+ "FILTER ( LANG ( ?comment ) = 'en' ).\r\n"
 				+ "}";
 	}
-
-	@Override
-	public String createFileName() {
-		return "Cave";
-	
-	}
-	
 }

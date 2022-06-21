@@ -54,10 +54,4 @@ public class Island extends NaturalAttraction{
 				+ "}";
 	}
 
-	@Override
-	public String createFileName() {
-		return "Island";
-	}
-	
-	
 }

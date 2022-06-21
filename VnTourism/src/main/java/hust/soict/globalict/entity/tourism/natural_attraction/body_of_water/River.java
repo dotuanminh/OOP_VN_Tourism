@@ -93,10 +93,4 @@ public class River extends BodyOfWater {
 				+ "}";
 	}
 
-	@Override
-	public String createFileName() {
-		return "River";
-	}
-	
-
 }

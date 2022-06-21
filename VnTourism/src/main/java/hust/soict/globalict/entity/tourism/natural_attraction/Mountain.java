@@ -47,9 +47,4 @@ public class Mountain extends NaturalAttraction{
 				+ "}";
 	}
 
-	@Override
-	public String createFileName() {
-		return "Mountain";
-	}
-	
 }

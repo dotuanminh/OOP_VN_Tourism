@@ -1,5 +1,7 @@
 package hust.soict.globalict.entity.tourism;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -12,7 +14,12 @@ import hust.soict.globalict.entity.rdf.Prefix;
 
 public interface IDataProcess {
 	public String createSparqlQuery() ;
-	public String createFileName();
+	public default String createFileName() {
+		return this.getClass().getSimpleName()+".ttl";
+	};
+	public default String createRawFileName() {
+		return "rawRDF_"+this.createFileName();
+	};
 	public default void createRawTtlFile(String object) {
 		String s1=Prefix.PREFIX + "CONSTRUCT {\r\n"
 				+ "    ?s ?p ?o\r\n"
@@ -24,9 +31,8 @@ public interface IDataProcess {
 		org.apache.jena.query.Query query = QueryFactory.create(s1);
 		QueryExecution qExe =QueryExecution.service("http://dbpedia.org/sparql").query(query).timeout(20000).build();
 		Model results = qExe.execConstruct();
-		String fullFileName = "rawRDF_"+this.createFileName()+".ttl";
 		try {
-			FileWriter out = new FileWriter(fullFileName);
+			FileWriter out = new FileWriter(this.createRawFileName());
 			results.write(out, "TURTLE");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -34,14 +40,13 @@ public interface IDataProcess {
 		}// TODO Auto-generated method stub
 		
 	}
-	public default void printTurtleFormat(String sparqlQuery, String fileName) {
+	public default void collectDataToTtlFile() {
 		// TODO Auto-generated method stub
-		Model inModel= RDFDataMgr.loadModel("rawRDF_"+fileName+".ttl");
+		Model inModel= RDFDataMgr.loadModel(this.createRawFileName());
 		try(QueryExecution qExe =QueryExecution.create(this.createSparqlQuery(), inModel)){
 			Model results = qExe.execConstruct();
-			String fullFileName = fileName+".ttl";
 			try {
-				FileWriter out = new FileWriter(fullFileName);
+				FileWriter out = new FileWriter(this.createFileName());
 				results.write(out, "TURTLE");
 				results.write(System.out, "TURTLE");
 			} catch (IOException e) {

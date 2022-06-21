@@ -51,9 +51,4 @@ public class Lake extends BodyOfWater {
 				+ "}";
 	}
 
-	@Override
-	public String createFileName() {
-		return "Lake";
-	}
-
 }

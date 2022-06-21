@@ -9,10 +9,5 @@ public class NaturalAttraction extends TouristAttraction{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	@Override
-	public String createFileName() {
-		return "Natural_Attraction";
-	}
 
 }

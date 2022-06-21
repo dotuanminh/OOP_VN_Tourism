@@ -35,10 +35,4 @@ public class Beach extends BodyOfWater{
 				+ "FILTER ( LANG ( ?comment ) = 'en' ).\r\n"
 				+ "}";
 	}
-
-	@Override
-	public String createFileName() {
-		return "Beach";
-	}
-	
 }

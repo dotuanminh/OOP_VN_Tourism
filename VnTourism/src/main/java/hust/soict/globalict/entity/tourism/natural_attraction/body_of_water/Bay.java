@@ -36,9 +36,4 @@ public class Bay extends BodyOfWater{
 				+ "}";
 	}
 
-	@Override
-	public String createFileName() {
-		return "Bay";
-	}
-	
 }
