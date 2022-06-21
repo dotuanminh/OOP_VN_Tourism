@@ -1,8 +1,8 @@
-package hust.soict.globalict.entity.tourism.natural_attraction.park;
+package hust.soict.globalict.entity.tourism.natural_attraction;
 
 import hust.soict.globalict.entity.rdf.Prefix;
 
-public class NationalPark extends Park {
+public class NationalPark extends NaturalAttraction {
     public final static String OBJECT_NATIONALPARK = "dbc:National_parks_of_Vietnam.";
 
     private static String areaTotal;

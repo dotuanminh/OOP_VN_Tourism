@@ -1,7 +1,7 @@
-package hust.soict.globalict.entity.tourism.natural_attraction.park;
+package hust.soict.globalict.entity.tourism.natural_attraction;
 import hust.soict.globalict.entity.rdf.Prefix;
 
-public class Zoo extends Park {
+public class Zoo extends NaturalAttraction {
     public final static String OBJECT_ZOO = "dbc:Zoos_in_Vietnam.";
 
     public Zoo() {

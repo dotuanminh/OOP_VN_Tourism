@@ -53,5 +53,4 @@ public class TouristAttraction implements IDataProcess {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
