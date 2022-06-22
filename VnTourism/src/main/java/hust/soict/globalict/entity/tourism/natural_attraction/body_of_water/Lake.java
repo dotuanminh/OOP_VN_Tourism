@@ -1,18 +1,10 @@
 package hust.soict.globalict.entity.tourism.natural_attraction.body_of_water;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryFactory;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.riot.RDFDataMgr;
-
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class Lake extends BodyOfWater {
-	public final static String OBJECT_LAKE="dbc:Lakes_of_Vietnam.";
-	private static String lakeType;
+	public final String OBJECT_LAKE="dbc:Lakes_of_Vietnam.";
+	private String lakeType;
 
 	public Lake() {
 		super();
@@ -20,7 +12,7 @@ public class Lake extends BodyOfWater {
 		this.createRawTtlFile(OBJECT_LAKE);
 	}
 
-	public static String getLakeType() {
+	public String getLakeType() {
 		return lakeType;
 	}
 
@@ -51,5 +43,4 @@ public class Lake extends BodyOfWater {
 				+ "FILTER ( LANG ( ?comment ) = 'en' )\r\n"
 				+ "}";
 	}
-
 }

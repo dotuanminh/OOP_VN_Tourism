@@ -1,27 +1,18 @@
 package hust.soict.globalict.entity.tourism.natural_attraction.body_of_water;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryFactory;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.riot.RDFDataMgr;
-
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class River extends BodyOfWater {
-	public final static String OBJECT_RIVER="dbc:Rivers_of_Vietnam.";
-	private static String sourceLocation;
-	private static String mouthLocation;
-	private static String mouthElevation;
-	private static String dischargeLocation;
-	private static String tributariesLeft;
-	private static String tributariesRight;
+	public final String OBJECT_RIVER="dbc:Rivers_of_Vietnam.";
+	private String sourceLocation;
+	private String mouthLocation;
+	private String mouthElevation;
+	private String dischargeLocation;
+	private String tributariesLeft;
+	private String tributariesRight;
 
 	public River() {
 		super();
-		// TODO Auto-generated constructor stub
 		this.sourceLocation = "?place dbp:source1Location  ?sourceLocation.";
 		this.mouthLocation = "?place dbo:mouthPlace ?mouthLocation.";
 		this.mouthElevation = "?place dbo:mouthElevation ?mouthElevation.";
@@ -31,27 +22,27 @@ public class River extends BodyOfWater {
 		this.createRawTtlFile(OBJECT_RIVER);
 	}
 
-	public static String getSourceLocation() {
+	public String getSourceLocation() {
 		return sourceLocation;
 	}
 
-	public static String getMouthLocation() {
+	public String getMouthLocation() {
 		return mouthLocation;
 	}
 
-	public static String getMouthElevation() {
+	public String getMouthElevation() {
 		return mouthElevation;
 	}
 
-	public static String getDischargeLocation() {
+	public String getDischargeLocation() {
 		return dischargeLocation;
 	}
 
-	public static String getTributariesLeft() {
+	public String getTributariesLeft() {
 		return tributariesLeft;
 	}
 
-	public static String getTributariesRight() {
+	public String getTributariesRight() {
 		return tributariesRight;
 	}
 	

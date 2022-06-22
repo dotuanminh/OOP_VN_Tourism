@@ -7,7 +7,6 @@ public class BotanicalGarden extends NaturalAttraction{
 
     public BotanicalGarden() {
 		super();
-		// TODO Auto-generated constructor stub
 		this.createRawTtlFile(OBJECT_ZOO);
 	}
     @Override

@@ -3,12 +3,12 @@ package hust.soict.globalict.entity.tourism.natural_attraction;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class NationalPark extends NaturalAttraction {
-    public final static String OBJECT_NATIONALPARK = "dbc:National_parks_of_Vietnam.";
+    public final String OBJECT_NATIONALPARK = "dbc:National_parks_of_Vietnam.";
 
-    private static String areaTotal;
-    private static String nearestCity;
-    private static String established;
-    private static String governingBody;
+    private String areaTotal;
+    private String nearestCity;
+    private String established;
+    private String governingBody;
 
     public NationalPark() {
         super();

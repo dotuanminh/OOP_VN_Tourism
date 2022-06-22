@@ -3,25 +3,24 @@ package hust.soict.globalict.entity.tourism.natural_attraction;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class Island extends NaturalAttraction{
-	public final static String OBJECT_ISLAND="dbc:Islands_of_Vietnam.";
-	private static String area;
-	private static String population;
-	private static String populationDensity;
+	public final String OBJECT_ISLAND="dbc:Islands_of_Vietnam.";
+	private String area;
+	private String population;
+	private String populationDensity;
 	public Island() {
 		super();
-		// TODO Auto-generated constructor stub
 		this.area="?place dbo:areaTotal ?area.";
 		this.population="?place dbp:population ?population.";
 		this.populationDensity="?place dbp:densityKm ?populationDensity.";
 		this.createRawTtlFile(OBJECT_ISLAND);
 	}
-	public static String getArea() {
+	public String getArea() {
 		return area;
 	}
-	public static String getPopulation() {
+	public String getPopulation() {
 		return population;
 	}
-	public static String getPopulationDensity() {
+	public String getPopulationDensity() {
 		return populationDensity;
 	}
 	@Override

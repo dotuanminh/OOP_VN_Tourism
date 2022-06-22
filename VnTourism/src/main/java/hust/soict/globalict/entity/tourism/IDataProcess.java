@@ -33,13 +33,11 @@ public interface IDataProcess {
 			FileWriter out = new FileWriter(this.createRawFileName());
 			results.write(out, "TURTLE");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}// TODO Auto-generated method stub
+		}
 		
 	}
 	public default void collectDataToTtlFile() {
-		// TODO Auto-generated method stub
 		Model inModel= RDFDataMgr.loadModel(this.createRawFileName());
 		try(QueryExecution qExe =QueryExecution.create(this.createSparqlQuery(), inModel)){
 			Model results = qExe.execConstruct();
@@ -48,11 +46,9 @@ public interface IDataProcess {
 				results.write(out, "TURTLE");
 				results.write(System.out, "TURTLE");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}// TODO Auto-generated catch block
+			}
 		}catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 				

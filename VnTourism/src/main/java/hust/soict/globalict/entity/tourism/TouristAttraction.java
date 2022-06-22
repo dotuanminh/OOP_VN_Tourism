@@ -1,16 +1,15 @@
 package hust.soict.globalict.entity.tourism;
 
 public class TouristAttraction implements IDataProcess{
-	private static String name;
-	private static String comment;
-	private static String geoPoint;
-	private static String geoLat;
-	private static String geoLong;
-	private static String location;
-	private static String country;
+	private String name;
+	private String comment;
+	private String geoPoint;
+	private String geoLat;
+	private String geoLong;
+	private String location;
+	private String country;
 
 	public TouristAttraction() {
-		// TODO Auto-generated constructor stub
 		this.name = "?place dbp:name ?name.";
 		this.comment = "?place rdfs:comment ?comment.";
 		this.geoPoint = "?place georss:point ?geoPoint.";
@@ -20,37 +19,36 @@ public class TouristAttraction implements IDataProcess{
 		this.country = "?place dbo:country ?country.";
 	}
 
-	public static String getName() {
-		return name;
+	public String getName() {
+		return this.name;
 	}
 
-	public static String getComment() {
-		return comment;
+	public String getComment() {
+		return this.comment;
 	}
 
-	public static String getGeoPoint() {
-		return geoPoint;
+	public String getGeoPoint() {
+		return this.geoPoint;
 	}
 
-	public static String getGeoLat() {
-		return geoLat;
+	public String getGeoLat() {
+		return this.geoLat;
 	}
 
-	public static String getGeoLong() {
-		return geoLong;
+	public String getGeoLong() {
+		return this.geoLong;
 	}
 
-	public static String getLocation() {
-		return location;
+	public String getLocation() {
+		return this.location;
 	}
 
-	public static String getCountry() {
-		return country;
+	public String getCountry() {
+		return this.country;
 	}
 
 	@Override
 	public String createSparqlQuery() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

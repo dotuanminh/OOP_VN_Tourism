@@ -1,21 +1,17 @@
 package hust.soict.globalict.entity.tourism.natural_attraction.body_of_water;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
 import hust.soict.globalict.entity.tourism.natural_attraction.NaturalAttraction;
 
 public class BodyOfWater extends NaturalAttraction {
-	private static String length;
+	private String length;
 
 	public BodyOfWater() {
 		super();
-		// TODO Auto-generated constructor stub
 		this.length = "?place dbo:length ?length.";
 	}
 
-	public static String getLength() {
-		return length;
+	public String getLength() {
+		return this.length;
 	}
 	
 }

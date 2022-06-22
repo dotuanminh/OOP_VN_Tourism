@@ -3,15 +3,14 @@ package hust.soict.globalict.entity.tourism.natural_attraction;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class Cave extends NaturalAttraction{
-	public final static String OBJECT_CAVE="dbc:Caves_of_Vietnam.";
-	private static String depth;
-	private static String length;
-	public static String dicovery;
-	private static String geology;
-	private static String entrance;
+	public final String OBJECT_CAVE="dbc:Caves_of_Vietnam.";
+	private String depth;
+	private String length;
+	public String dicovery;
+	private String geology;
+	private String entrance;
 	public Cave() {
 		super();
-		// TODO Auto-generated constructor stub
 		this.depth="?place dbo:depth ?depth.";
 		this.length="?place dbo:length ?length.";
 		this.dicovery="?place dbp:discovery ?discover.";
@@ -19,19 +18,19 @@ public class Cave extends NaturalAttraction{
 		this.entrance="?place dbp:entranceCount ?entrance.";
 		this.createRawTtlFile(OBJECT_CAVE);
 	}
-	public static String getDepth() {
+	public String getDepth() {
 		return depth;
 	}
-	public static String getLength() {
+	public String getLength() {
 		return length;
 	}
-	public static String getDicovery() {
+	public String getDicovery() {
 		return dicovery;
 	}
-	public static String getGeology() {
+	public String getGeology() {
 		return geology;
 	}
-	public static String getEntrance() {
+	public String getEntrance() {
 		return entrance;
 	}
 	@Override

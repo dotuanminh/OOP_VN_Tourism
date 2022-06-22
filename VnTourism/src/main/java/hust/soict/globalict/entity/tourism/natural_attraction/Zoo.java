@@ -6,7 +6,6 @@ public class Zoo extends NaturalAttraction {
 
     public Zoo() {
 		super();
-		// TODO Auto-generated constructor stub
 		this.createRawTtlFile(OBJECT_ZOO);
 	}
 

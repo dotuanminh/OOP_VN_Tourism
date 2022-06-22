@@ -1,13 +1,11 @@
 package hust.soict.globalict.entity.tourism.natural_attraction.body_of_water;
 
 import hust.soict.globalict.entity.rdf.Prefix;
-import hust.soict.globalict.entity.tourism.natural_attraction.NaturalAttraction;
 
 public class Bay extends BodyOfWater{
 	public final static String OBJECT_BAY="dbc:Bays_of_Vietnam.";
 	public Bay() {
 		super();
-		// TODO Auto-generated constructor stub
 		this.createRawTtlFile(OBJECT_BAY);
 	}
 	@Override
