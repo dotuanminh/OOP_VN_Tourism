@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.riot.RDFDataMgr;
 
 import hust.soict.globalict.entity.rdf.Prefix;
 

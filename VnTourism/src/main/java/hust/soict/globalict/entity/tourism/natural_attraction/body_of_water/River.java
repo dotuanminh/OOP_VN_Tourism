@@ -92,5 +92,4 @@ public class River extends BodyOfWater {
 				+ "FILTER ( LANG ( ?comment ) = 'en' ).\r\n"
 				+ "}";
 	}
-
 }

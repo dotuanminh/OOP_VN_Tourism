@@ -1,5 +1,8 @@
 package hust.soict.globalict.entity.tourism.natural_attraction.body_of_water;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 import hust.soict.globalict.entity.tourism.natural_attraction.NaturalAttraction;
 
 public class BodyOfWater extends NaturalAttraction {
@@ -14,5 +17,5 @@ public class BodyOfWater extends NaturalAttraction {
 	public static String getLength() {
 		return length;
 	}
-
+	
 }

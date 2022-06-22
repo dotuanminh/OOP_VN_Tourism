@@ -1,6 +1,6 @@
 package hust.soict.globalict.entity.tourism;
 
-public class TouristAttraction implements IDataProcess {
+public class TouristAttraction implements IDataProcess{
 	private static String name;
 	private static String comment;
 	private static String geoPoint;
@@ -53,4 +53,5 @@ public class TouristAttraction implements IDataProcess {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }
