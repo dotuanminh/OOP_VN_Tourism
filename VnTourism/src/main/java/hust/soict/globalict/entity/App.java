@@ -1,6 +1,13 @@
 package hust.soict.globalict.entity;
 
-import hust.soict.globalict.entity.tourism.natural_attraction.NationalPark;
+import java.util.ArrayList;
+import java.util.List;
+
+import hust.soict.globalict.entity.tourism.natural_attraction.body_of_water.Bay;
+import hust.soict.globalict.entity.tourism.natural_attraction.body_of_water.Beach;
+import hust.soict.globalict.entity.tourism.natural_attraction.body_of_water.BodyOfWater;
+import hust.soict.globalict.entity.tourism.natural_attraction.body_of_water.Lake;
+import hust.soict.globalict.entity.tourism.natural_attraction.body_of_water.River;
 
 /**
  * Hello world!
@@ -8,8 +15,13 @@ import hust.soict.globalict.entity.tourism.natural_attraction.NationalPark;
  */
 public class App {
 	public static void main(String[] args) {
-		System.out.println("--------------------------------");
-		NationalPark l1 = new NationalPark();
-		l1.collectDataToTtlFile();
+		System.out.println("--------------------------------"); 	
+		List<BodyOfWater> bodyofwater = new ArrayList<>();
+		bodyofwater.add(new Lake());
+		bodyofwater.add(new River());
+		bodyofwater.add(new Bay());
+		bodyofwater.add(new Beach());
+		new BodyOfWater().collectDataFromChildClass(new BodyOfWater(), bodyofwater);
+		
 	}
 }
