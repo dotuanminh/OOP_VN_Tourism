@@ -62,8 +62,7 @@ public interface IDataProcess {
 				Model inModel= RDFDataMgr.loadModel(((IDataProcess) child.get(i)).createFileName());
 				try(QueryExecution qExe =QueryExecution.create(((IDataProcess) child.get(i)).createSparqlQuery(), inModel)){
 					Model results = qExe.execConstruct();
-					results.write(out, "TURTLE");
-					results.write(System.out, "TURTLE");
+					results.write(out, "TURTLE");;
 				}catch (Exception e) {
 					e.printStackTrace();
 				}
