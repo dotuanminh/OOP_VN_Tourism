@@ -1,9 +1,9 @@
 package hust.soict.globalict.entity.tourism.natural_attraction;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class Island extends NaturalAttraction{
-	public final String OBJECT_ISLAND="dbc:Islands_of_Vietnam.";
 	private String area;
 	private String population;
 	private String populationDensity;
@@ -12,7 +12,6 @@ public class Island extends NaturalAttraction{
 		this.area="?place dbo:areaTotal ?area.";
 		this.population="?place dbp:population ?population.";
 		this.populationDensity="?place dbp:densityKm ?populationDensity.";
-		this.createRawTtlFile(OBJECT_ISLAND);
 	}
 	public String getArea() {
 		return area;
@@ -25,8 +24,9 @@ public class Island extends NaturalAttraction{
 	}
 	@Override
 	public String createSparqlQuery() {
+		this.createRawTtlFile(ObjectToCollect.OBJECT_ISLAND);
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+ OBJECT_ISLAND + "\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_ISLAND + "\r\n"
 				+ this.getName()+"\r\n"
 				+ this.getComment()+"\r\n"
 				+ this.getGeoPoint()+"\r\n"
@@ -38,7 +38,7 @@ public class Island extends NaturalAttraction{
 				+ this.getPopulation()+"\r\n"
 				+ this.getPopulationDensity()+"\r\n"
 				+ "} WHERE{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+ OBJECT_ISLAND + "\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_ISLAND + "\r\n"
 				+ "OPTIONAL {"+ this.getName()+"}\r\n"
 				+ "OPTIONAL {"+ this.getComment()+"}\r\n"
 				+ "OPTIONAL {"+ this.getGeoPoint()+"}\r\n"

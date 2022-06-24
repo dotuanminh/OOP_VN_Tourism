@@ -1,9 +1,9 @@
 package hust.soict.globalict.entity.tourism.natural_attraction;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class NationalPark extends NaturalAttraction {
-    public final String OBJECT_NATIONALPARK = "dbc:National_parks_of_Vietnam.";
 
     private String areaTotal;
     private String nearestCity;
@@ -16,8 +16,6 @@ public class NationalPark extends NaturalAttraction {
         this.nearestCity = "?place dbo:nearestCity ?nearestCity.";
         this.established = "?place dbo:established ?established.";
         this.governingBody = "?place dbo:governingBody ?governingBody.";
-
-        this.createRawTtlFile(OBJECT_NATIONALPARK);
     }
 
     public String getAreaTotal() {
@@ -38,8 +36,9 @@ public class NationalPark extends NaturalAttraction {
 
     @Override
     public String createSparqlQuery() {
+        this.createRawTtlFile(ObjectToCollect.OBJECT_NATIONALPARK);
         return Prefix.PREFIX + "CONSTRUCT{\r\n"
-                + "?place dbo:wikiPageWikiLink " + OBJECT_NATIONALPARK + "\r\n"
+                + "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_NATIONALPARK + "\r\n"
                 + this.getName() + "\r\n"
                 + this.getComment() + "\r\n"
                 + this.getGeoPoint() + "\r\n"
@@ -52,7 +51,7 @@ public class NationalPark extends NaturalAttraction {
                 + this.getEstablished() + "\r\n"
                 + this.getGoverningBody() + "\r\n"
                 + "} WHERE{\r\n"
-                + "?place dbo:wikiPageWikiLink " + OBJECT_NATIONALPARK + "\r\n"
+                + "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_NATIONALPARK + "\r\n"
                 + "OPTIONAL {" + this.getName() + "}\r\n"
                 + "OPTIONAL {" + this.getComment() + "}\r\n"
                 + "OPTIONAL {" + this.getGeoPoint() + "}\r\n"

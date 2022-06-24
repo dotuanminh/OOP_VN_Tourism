@@ -1,9 +1,9 @@
 package hust.soict.globalict.entity.tourism.man_made_attraction;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class Bridge extends ManmadeAttraction {
-	public final String OBJECT_BRIDGE = "dbc:Bridges_in_Vietnam.";
 
 	private String length;
 	private String type;
@@ -32,7 +32,6 @@ public class Bridge extends ManmadeAttraction {
 		this.locatedInArea = "?place dbo:locatedInArea ?locatedInArea.";
 		this.carries = "?place dbp:carries ?carries.";
 		this.material = "?place dbp:material ?material.";
-		this.createRawTtlFile(OBJECT_BRIDGE);
 	}
 
 	public String getLength() {
@@ -85,8 +84,9 @@ public class Bridge extends ManmadeAttraction {
 
 	@Override
 	public String createSparqlQuery() {
+		this.createRawTtlFile(ObjectToCollect.OBJECT_BRIDGE);
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
-				+ "?place dbo:wikiPageWikiLink " + OBJECT_BRIDGE + "\r\n"
+				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_BRIDGE + "\r\n"
 				+ this.getName() + "\r\n"
 				+ this.getComment() + "\r\n"
 				+ this.getGeoPoint() + "\r\n"
@@ -107,7 +107,7 @@ public class Bridge extends ManmadeAttraction {
 				+ this.getCarries() + "\r\n"
 				+ this.getMaterial() + "\r\n"
 				+ "} WHERE{\r\n"
-				+ "?place dbo:wikiPageWikiLink " + OBJECT_BRIDGE + "\r\n"
+				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_BRIDGE + "\r\n"
 				+ "OPTIONAL {" + this.getName() + "}\r\n"
 				+ "OPTIONAL {" + this.getComment() + "}\r\n"
 				+ "OPTIONAL {" + this.getGeoPoint() + "}\r\n"

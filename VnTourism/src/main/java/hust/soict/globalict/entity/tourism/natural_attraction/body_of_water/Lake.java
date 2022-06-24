@@ -1,15 +1,14 @@
 package hust.soict.globalict.entity.tourism.natural_attraction.body_of_water;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class Lake extends BodyOfWater {
-	public final String OBJECT_LAKE="dbc:Lakes_of_Vietnam.";
 	private String lakeType;
 
 	public Lake() {
 		super();
 		this.lakeType = "?place dbo:type ?lakeType.";
-		this.createRawTtlFile(OBJECT_LAKE);
 	}
 
 	public String getLakeType() {
@@ -18,8 +17,9 @@ public class Lake extends BodyOfWater {
 
 	@Override
 	public String createSparqlQuery() {
+		this.createRawTtlFile(ObjectToCollect.OBJECT_LAKE);
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+OBJECT_LAKE+"\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ObjectToCollect.OBJECT_LAKE+"\r\n"
 				+ this.getName()+"\r\n"
 				+ this.getComment()+"\r\n"
 				+ this.getGeoPoint()+"\r\n"
@@ -30,7 +30,7 @@ public class Lake extends BodyOfWater {
 				+ this.getLength()+"\r\n"
 				+ this.getLakeType()+"\r\n"
 				+ "} WHERE{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+OBJECT_LAKE+"\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ObjectToCollect.OBJECT_LAKE+"\r\n"
 				+ "OPTIONAL {"+ this.getName()+"}\r\n"
 				+ "OPTIONAL {"+ this.getComment()+"}\r\n"
 				+ "OPTIONAL {"+ this.getGeoPoint()+"}\r\n"

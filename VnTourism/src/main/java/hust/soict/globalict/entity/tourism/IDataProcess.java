@@ -1,4 +1,4 @@
-package hust.soict.globalict.entity.tourism;
+ package hust.soict.globalict.entity.tourism;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,15 +22,18 @@ public interface IDataProcess {
 		return "rawRDF_" + this.createFileName();
 	};
 
-	public default void createRawTtlFile(String object) {
-		String s1 = Prefix.PREFIX + "CONSTRUCT {\r\n" + "    ?s ?p ?o\r\n" + "}\r\n" + "WHERE {\r\n"
-				+ "    ?s dbo:wikiPageWikiLink " + object + "\r\n" + "    ?s ?p ?o.\r\n" + "}";
-		org.apache.jena.query.Query query = QueryFactory.create(s1);
-		QueryExecution qExe = QueryExecution.service("http://dbpedia.org/sparql").query(query).timeout(20000).build();
-		Model results = qExe.execConstruct();
+	public default void createRawTtlFile(String...object) {
 		try {
 			FileWriter out = new FileWriter(this.createRawFileName());
-			results.write(out, "TURTLE");
+			for (String i:object) {
+				String s1 = Prefix.PREFIX + "CONSTRUCT {\r\n" + "    ?s ?p ?o\r\n" + "}\r\n" + "WHERE {\r\n"
+						+ "    ?s dbo:wikiPageWikiLink " + i + "\r\n" + "    ?s ?p ?o.\r\n" + "}";
+				org.apache.jena.query.Query query = QueryFactory.create(s1);
+				QueryExecution qExe = QueryExecution.service("http://dbpedia.org/sparql").query(query).timeout(50000).build();
+				Model results = qExe.execConstruct();
+				results.write(out, "TURTLE");
+			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -38,8 +41,9 @@ public interface IDataProcess {
 	}
 
 	public default void collectDataToTtlFile() {
+		String inputQuery=this.createSparqlQuery();
 		Model inModel = RDFDataMgr.loadModel(this.createRawFileName());
-		try (QueryExecution qExe = QueryExecution.create(this.createSparqlQuery(), inModel)) {
+		try (QueryExecution qExe = QueryExecution.create(inputQuery, inModel)) {
 			Model results = qExe.execConstruct();
 			try {
 				FileWriter out = new FileWriter(this.createFileName());
@@ -52,24 +56,6 @@ public interface IDataProcess {
 			e.printStackTrace();
 		}
 
-	}
-
-	public default <T> void collectDataFromChildClass(T parent, List<T> child) {
-		try {
-			FileWriter out = new FileWriter(((IDataProcess) parent).createFileName());
-			for (int i=0;i<child.size();++i) {
-				((IDataProcess) child.get(i)).collectDataToTtlFile();
-				Model inModel= RDFDataMgr.loadModel(((IDataProcess) child.get(i)).createFileName());
-				try(QueryExecution qExe =QueryExecution.create(((IDataProcess) child.get(i)).createSparqlQuery(), inModel)){
-					Model results = qExe.execConstruct();
-					results.write(out, "TURTLE");;
-				}catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 }
 	

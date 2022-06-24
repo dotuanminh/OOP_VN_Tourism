@@ -1,9 +1,10 @@
 package hust.soict.globalict.entity.tourism.natural_attraction;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class Cave extends NaturalAttraction{
-	public final String OBJECT_CAVE="dbc:Caves_of_Vietnam.";
+
 	private String depth;
 	private String length;
 	public String dicovery;
@@ -16,7 +17,6 @@ public class Cave extends NaturalAttraction{
 		this.dicovery="?place dbp:discovery ?discover.";
 		this.geology="?place dbp:geology ?geology.";
 		this.entrance="?place dbp:entranceCount ?entrance.";
-		this.createRawTtlFile(OBJECT_CAVE);
 	}
 	public String getDepth() {
 		return depth;
@@ -35,8 +35,9 @@ public class Cave extends NaturalAttraction{
 	}
 	@Override
 	public String createSparqlQuery() {
+		this.createRawTtlFile(ObjectToCollect.OBJECT_CAVE);
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+ OBJECT_CAVE + "\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_CAVE + "\r\n"
 				+ this.getName()+"\r\n"
 				+ this.getComment()+"\r\n"
 				+ this.getGeoPoint()+"\r\n"
@@ -50,7 +51,7 @@ public class Cave extends NaturalAttraction{
 				+ this.getGeology()+"\r\n"
 				+ this.getEntrance()+"\r\n"
 				+ "} WHERE{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+ OBJECT_CAVE + "\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_CAVE + "\r\n"
 				+ "OPTIONAL {"+ this.getName()+"}\r\n"
 				+ "OPTIONAL {"+ this.getComment()+"}\r\n"
 				+ "OPTIONAL {"+ this.getGeoPoint()+"}\r\n"

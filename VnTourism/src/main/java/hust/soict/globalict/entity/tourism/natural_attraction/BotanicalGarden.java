@@ -1,18 +1,18 @@
 package hust.soict.globalict.entity.tourism.natural_attraction;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class BotanicalGarden extends NaturalAttraction{
-	public final static String OBJECT_ZOO = "dbc:Botanical_gardens_in_Vietnam.";
 
     public BotanicalGarden() {
 		super();
-		this.createRawTtlFile(OBJECT_ZOO);
 	}
     @Override
     public String createSparqlQuery() {
+    	this.createRawTtlFile(ObjectToCollect.OBJECT_GARDEN);
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+ OBJECT_ZOO + "\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_GARDEN + "\r\n"
 				+ this.getName()+"\r\n"
 				+ this.getComment()+"\r\n"
 				+ this.getGeoPoint()+"\r\n"
@@ -21,7 +21,7 @@ public class BotanicalGarden extends NaturalAttraction{
 				+ this.getLocation()+"\r\n"
 				+ this.getCountry()+"\r\n"
 				+ "} WHERE{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+ OBJECT_ZOO + "\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_GARDEN + "\r\n"
 				+ "OPTIONAL {"+ this.getName()+"}\r\n"
 				+ "OPTIONAL {"+ this.getComment()+"}\r\n"
 				+ "OPTIONAL {"+ this.getGeoPoint()+"}\r\n"

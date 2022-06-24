@@ -1,10 +1,9 @@
 package hust.soict.globalict.entity.tourism.man_made_attraction.modern_architecture;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class Building extends ModernArchitecture {
-
-	public final String OBJECT_BUILDING = "dbc:Skyscraper_office_buildings_in_Vietnam.";
 
 	private String architect;
 	private String architecturalStyle;
@@ -27,8 +26,6 @@ public class Building extends ModernArchitecture {
 		this.floorCount = "?place dbo:floorCount ?floorCount.";
 		this.height = "?place dbo:height ?height.";
 		this.numberOfRooms = "?place dbo:numberOfRooms ?numberOfRooms.";
-
-		this.createRawTtlFile(OBJECT_BUILDING);
 	}
 
 	public String getArchitect() {
@@ -69,8 +66,9 @@ public class Building extends ModernArchitecture {
 
 	@Override
 	public String createSparqlQuery() {
+		this.createRawTtlFile(ObjectToCollect.OBJECT_BUILDING);
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
-				+ "?place dbo:wikiPageWikiLink " + OBJECT_BUILDING + "\r\n"
+				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_BUILDING + "\r\n"
 				+ this.getName() + "\r\n"
 				+ this.getComment() + "\r\n"
 				+ this.getGeoPoint() + "\r\n"
@@ -90,7 +88,7 @@ public class Building extends ModernArchitecture {
 				+ this.getOpeningDate() + "\r\n"
 				+ this.getOwner() + "\r\n"
 				+ "} WHERE{\r\n"
-				+ "?place dbo:wikiPageWikiLink " + OBJECT_BUILDING + "\r\n"
+				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_BUILDING + "\r\n"
 				+ "OPTIONAL {" + this.getName() + "}\r\n"
 				+ "OPTIONAL {" + this.getComment() + "}\r\n"
 				+ "OPTIONAL {" + this.getGeoPoint() + "}\r\n"

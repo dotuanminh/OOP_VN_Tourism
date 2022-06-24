@@ -1,9 +1,9 @@
 package hust.soict.globalict.entity.tourism.man_made_attraction;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class Cathedral extends ManmadeAttraction {
-    public final String OBJECT_CATHEDRAL = "dbc:Roman_Catholic_cathedrals_in_Vietnam.";
 
     private String denomination;
     private String functionalStatus;
@@ -17,7 +17,6 @@ public class Cathedral extends ManmadeAttraction {
         this.functionalStatus = "?place dbp:functionalStatus ?functionalStatus.";
         this.architecturalStyle = "?place dbp:architecturalStyle ?architecturalStyle.";
         this.completedDate = "?place dbp:completedDate ?completedDate.";
-		this.createRawTtlFile(OBJECT_CATHEDRAL);
     }
 
     public String getDenomination() {
@@ -38,8 +37,9 @@ public class Cathedral extends ManmadeAttraction {
 
     @Override
 	public String createSparqlQuery() {
+		this.createRawTtlFile(ObjectToCollect.OBJECT_CATHEDRAL);
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
-				+ "?place dbo:wikiPageWikiLink " + OBJECT_CATHEDRAL + "\r\n"
+				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_CATHEDRAL + "\r\n"
 				+ this.getName() + "\r\n"
 				+ this.getComment() + "\r\n"
 				+ this.getGeoPoint() + "\r\n"
@@ -52,7 +52,7 @@ public class Cathedral extends ManmadeAttraction {
 				+ this.getArchitecturalStyle() + "\r\n"
 				+ this.getCompletedDate() + "\r\n"
 				+ "} WHERE{\r\n"
-				+ "?place dbo:wikiPageWikiLink " + OBJECT_CATHEDRAL + "\r\n"
+				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_CATHEDRAL + "\r\n"
 				+ "OPTIONAL {" + this.getName() + "}\r\n"
 				+ "OPTIONAL {" + this.getComment() + "}\r\n"
 				+ "OPTIONAL {" + this.getGeoPoint() + "}\r\n"

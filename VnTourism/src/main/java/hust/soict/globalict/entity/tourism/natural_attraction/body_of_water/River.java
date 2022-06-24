@@ -1,9 +1,10 @@
 package hust.soict.globalict.entity.tourism.natural_attraction.body_of_water;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class River extends BodyOfWater {
-	public final String OBJECT_RIVER="dbc:Rivers_of_Vietnam.";
+	
 	private String sourceLocation;
 	private String mouthLocation;
 	private String mouthElevation;
@@ -19,7 +20,6 @@ public class River extends BodyOfWater {
 		this.dischargeLocation = "?place dbp:discharge1Location ?dischargeLocation.";
 		this.tributariesLeft = "?place dbp:tributariesLeft ?tributariesLeft.";
 		this.tributariesRight = "?place dbp:tributariesRight ?tributariesRight.";
-		this.createRawTtlFile(OBJECT_RIVER);
 	}
 
 	public String getSourceLocation() {
@@ -48,8 +48,9 @@ public class River extends BodyOfWater {
 	
 	@Override
 	public String createSparqlQuery() {
+		this.createRawTtlFile(ObjectToCollect.OBJECT_RIVER);
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+ OBJECT_RIVER + "\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_RIVER + "\r\n"
 				+ this.getName()+"\r\n"
 				+ this.getComment()+"\r\n"
 				+ this.getGeoPoint()+"\r\n"
@@ -65,7 +66,7 @@ public class River extends BodyOfWater {
 				+ this.getTributariesLeft()+"\r\n"
 				+ this.getTributariesRight()+"\r\n"
 				+ "} WHERE{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+ OBJECT_RIVER + "\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_RIVER + "\r\n"
 				+ "OPTIONAL {"+ this.getName()+"}\r\n"
 				+ "OPTIONAL {"+ this.getComment()+"}\r\n"
 				+ "OPTIONAL {"+ this.getGeoPoint()+"}\r\n"

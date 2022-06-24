@@ -1,10 +1,9 @@
 package hust.soict.globalict.entity.tourism.man_made_attraction.modern_architecture;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class AmusementPark extends ModernArchitecture {
-
-    public final String OBJECT_AMUSEMENTPARK = "dbc:Amusement_parks_in_Vietnam.";
 
     private String area;
     private String coasters;
@@ -15,7 +14,6 @@ public class AmusementPark extends ModernArchitecture {
         this.area = "?place dbp:area ?area.";
         this.coasters = "?place dbp:coasters ?coasters.";
 
-        this.createRawTtlFile(OBJECT_AMUSEMENTPARK);
     }
 
     public String getArea() {
@@ -28,8 +26,9 @@ public class AmusementPark extends ModernArchitecture {
 
     @Override
     public String createSparqlQuery() {
+        this.createRawTtlFile(ObjectToCollect.OBJECT_AMUSEMENTPARK);
         return Prefix.PREFIX + "CONSTRUCT{\r\n"
-                + "?place dbo:wikiPageWikiLink " + OBJECT_AMUSEMENTPARK + "\r\n"
+                + "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_AMUSEMENTPARK + "\r\n"
                 + this.getName() + "\r\n"
                 + this.getComment() + "\r\n"
                 + this.getGeoPoint() + "\r\n"
@@ -42,7 +41,7 @@ public class AmusementPark extends ModernArchitecture {
                 + this.getOpeningDate() + "\r\n"
                 + this.getOwner() + "\r\n"
                 + "} WHERE{\r\n"
-                + "?place dbo:wikiPageWikiLink " + OBJECT_AMUSEMENTPARK + "\r\n"
+                + "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_AMUSEMENTPARK + "\r\n"
                 + "OPTIONAL {" + this.getName() + "}\r\n"
                 + "OPTIONAL {" + this.getComment() + "}\r\n"
                 + "OPTIONAL {" + this.getGeoPoint() + "}\r\n"

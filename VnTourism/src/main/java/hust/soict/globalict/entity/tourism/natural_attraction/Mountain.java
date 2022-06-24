@@ -1,9 +1,9 @@
 package hust.soict.globalict.entity.tourism.natural_attraction;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class Mountain extends NaturalAttraction {
-	public final String OBJECT_MOUNTAIN = "dbc:Mountains_of_Vietnam.";
 	private String elevation;
 	private String prominence;
 
@@ -11,7 +11,6 @@ public class Mountain extends NaturalAttraction {
 		super();
 		this.elevation = "?place dbo:elevation ?elevation.";
 		this.prominence = "?place dbo:prominence ?prominence.";
-		this.createRawTtlFile(OBJECT_MOUNTAIN);
 	}
 
 	public String getElevation() {
@@ -24,8 +23,9 @@ public class Mountain extends NaturalAttraction {
 
 	@Override
 	public String createSparqlQuery() {
+		this.createRawTtlFile(ObjectToCollect.OBJECT_MOUNTAIN);
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
-				+ "?place dbo:wikiPageWikiLink " + OBJECT_MOUNTAIN + "\r\n"
+				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_MOUNTAIN + "\r\n"
 				+ this.getName() + "\r\n"
 				+ this.getComment() + "\r\n"
 				+ this.getGeoPoint() + "\r\n"
@@ -36,7 +36,7 @@ public class Mountain extends NaturalAttraction {
 				+ this.getElevation() + "\r\n"
 				+ this.getProminence() + "\r\n"
 				+ "} WHERE{\r\n"
-				+ "?place dbo:wikiPageWikiLink " + OBJECT_MOUNTAIN + "\r\n"
+				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_MOUNTAIN + "\r\n"
 				+ "OPTIONAL {" + this.getName() + "}\r\n"
 				+ "OPTIONAL {" + this.getComment() + "}\r\n"
 				+ "OPTIONAL {" + this.getGeoPoint() + "}\r\n"

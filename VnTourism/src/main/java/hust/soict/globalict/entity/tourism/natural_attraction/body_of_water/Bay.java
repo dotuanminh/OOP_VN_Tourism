@@ -1,17 +1,17 @@
 package hust.soict.globalict.entity.tourism.natural_attraction.body_of_water;
 
+import hust.soict.globalict.entity.rdf.ObjectToCollect;
 import hust.soict.globalict.entity.rdf.Prefix;
 
 public class Bay extends BodyOfWater{
-	public final static String OBJECT_BAY="dbc:Bays_of_Vietnam.";
 	public Bay() {
 		super();
-		this.createRawTtlFile(OBJECT_BAY);
 	}
 	@Override
 	public String createSparqlQuery() {
+		this.createRawTtlFile(ObjectToCollect.OBJECT_BAY);
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+ OBJECT_BAY + "\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_BAY + "\r\n"
 				+ this.getName()+"\r\n"
 				+ this.getComment()+"\r\n"
 				+ this.getGeoPoint()+"\r\n"
@@ -21,7 +21,7 @@ public class Bay extends BodyOfWater{
 				+ this.getCountry()+"\r\n"
 				+ this.getLength()+"\r\n"
 				+ "} WHERE{\r\n"
-				+ "?place dbo:wikiPageWikiLink "+ OBJECT_BAY + "\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_BAY + "\r\n"
 				+ "OPTIONAL {"+ this.getName()+"}\r\n"
 				+ "OPTIONAL {"+ this.getComment()+"}\r\n"
 				+ "OPTIONAL {"+ this.getGeoPoint()+"}\r\n"
