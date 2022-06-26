@@ -41,6 +41,8 @@ public interface IDataProcess {
 	}
 
 	public default void collectDataToTtlFile() {
+		System.out.println("Collecting data.......");
+		System.out.println("---------------------------------------------------------------------------");
 		String inputQuery=this.createSparqlQuery();
 		Model inModel = RDFDataMgr.loadModel(this.createRawFileName());
 		try (QueryExecution qExe = QueryExecution.create(inputQuery, inModel)) {
@@ -49,6 +51,9 @@ public interface IDataProcess {
 				FileWriter out = new FileWriter(this.createFileName());
 				results.write(out, "TURTLE");
 				results.write(System.out, "TURTLE");
+				System.out.println("---------------------------------------------------------------------------");
+				System.out.println("Collecting data successfully...");
+				System.out.println("This file has been saved to "+this.createFileName()+" in the project");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

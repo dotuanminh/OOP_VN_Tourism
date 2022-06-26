@@ -1,10 +1,6 @@
 package hust.soict.globalict.entity;
 
-import hust.soict.globalict.entity.rdf.ObjectToCollect;
-import hust.soict.globalict.entity.tourism.TouristAttraction;
-import hust.soict.globalict.entity.tourism.man_made_attraction.ManmadeAttraction;
-import hust.soict.globalict.entity.tourism.man_made_attraction.modern_architecture.ModernArchitecture;
-import hust.soict.globalict.entity.tourism.natural_attraction.NaturalAttraction;
+import hust.soict.globalict.entity.tourism.natural_attraction.body_of_water.BodyOfWater;
 
 /**
  * Hello world!
