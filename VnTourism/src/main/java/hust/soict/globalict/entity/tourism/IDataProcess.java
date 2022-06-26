@@ -2,7 +2,6 @@
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
