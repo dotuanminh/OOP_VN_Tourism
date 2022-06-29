@@ -1,6 +1,6 @@
 package hust.soict.globalict.backend;
 
-import hust.soict.globalict.backend.tourism.natural_attraction.body_of_water.Lake;
+import hust.soict.globalict.backend.tourism.naturalattraction.bodyofwater.Lake;
 
 /**
  * Hello world!

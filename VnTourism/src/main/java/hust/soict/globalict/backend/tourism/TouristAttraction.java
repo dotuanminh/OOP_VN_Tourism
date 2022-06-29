@@ -1,7 +1,8 @@
 package hust.soict.globalict.backend.tourism;
 
-import hust.soict.globalict.backend.rdf.ObjectToCollect;
-import hust.soict.globalict.backend.rdf.Prefix;
+import hust.soict.globalict.backend.dataprocess.IDataProcess;
+import hust.soict.globalict.backend.rdfconstant.ObjectToCollect;
+import hust.soict.globalict.backend.rdfconstant.Prefix;
 
 public class TouristAttraction implements IDataProcess{
 	private String name;
