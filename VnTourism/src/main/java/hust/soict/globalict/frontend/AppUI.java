@@ -134,7 +134,7 @@ public class AppUI extends Application {
 
                     output.getDialogPane().setExpandableContent(outputContent);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    (new River()).collectDataToTtlFile(stream);
+                    (new River()).collectDataToTtlFile();
                     textArea.setText(stream.toString());
                     output.showAndWait();
                 }
