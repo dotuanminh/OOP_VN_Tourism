@@ -1,7 +1,6 @@
 package hust.soict.globalict.frontend;
 
-
-
+import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.River;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -10,19 +9,18 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Optional;
-
+import java.util.zip.DeflaterOutputStream;
 
 
 public class AppUI extends Application {
@@ -86,7 +84,6 @@ public class AppUI extends Application {
                     naturalChoiceBox.show();
                     manmadeChoiceBox.setDisable(true);
                 }
-
             }
         });
 
@@ -98,6 +95,12 @@ public class AppUI extends Application {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.initStyle(StageStyle.UTILITY);
                 alert.setTitle("Confirmation");
+
+                ButtonType buttonYes = new ButtonType("Yes");
+                ButtonType buttonNo = new ButtonType("No");
+
+                alert.getButtonTypes().setAll(buttonYes,buttonNo);
+
                 RadioButton rb = (RadioButton) toggleGroup.getSelectedToggle();
                 String chosen = null;
                 if(rb.getText().equals(manmadeButton.getText())){
@@ -109,9 +112,33 @@ public class AppUI extends Application {
                 alert.setHeaderText("Is this your choice?");
                 alert.setContentText("You have selected " + rb.getText() + " - " + chosen);
                 Optional<ButtonType> option = alert.showAndWait();
-                if(option.get() == ButtonType.OK){
-                    // needs processing here
+                if(option.get() == buttonYes){
+                    Alert output = new Alert(Alert.AlertType.INFORMATION);
+                    output.initStyle(StageStyle.UTILITY);
+                    output.setTitle("Collecting");
+                    output.setHeaderText("Collecting data...");
+                    output.setContentText(chosen);
+
+                    TextArea textArea = new TextArea("Connecting...");
+                    textArea.setEditable(false);
+                    textArea.setWrapText(true);
+
+                    textArea.setMaxWidth(Double.MAX_VALUE);
+                    textArea.setMaxHeight(Double.MAX_VALUE);
+                    GridPane.setVgrow(textArea, Priority.ALWAYS);
+                    GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+                    GridPane outputContent = new GridPane();
+                    outputContent.setMaxWidth(Double.MAX_VALUE);
+                    outputContent.add(textArea,0,1);
+
+                    output.getDialogPane().setExpandableContent(outputContent);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    (new River()).collectDataToTtlFile(stream);
+                    textArea.setText(stream.toString());
+                    output.showAndWait();
                 }
+
 
             }
         });
