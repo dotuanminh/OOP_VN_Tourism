@@ -1,5 +1,6 @@
 package hust.soict.globalict.frontend;
 
+import hust.soict.globalict.backend.touristattraction.TouristAttraction;
 import hust.soict.globalict.backend.touristattraction.manmadeattraction.Bridge;
 import hust.soict.globalict.backend.touristattraction.manmadeattraction.Cathedral;
 import hust.soict.globalict.backend.touristattraction.manmadeattraction.Museum;
@@ -9,10 +10,7 @@ import hust.soict.globalict.backend.touristattraction.manmadeattraction.modernar
 import hust.soict.globalict.backend.touristattraction.manmadeattraction.modernarchitecture.Hotel;
 import hust.soict.globalict.backend.touristattraction.manmadeattraction.modernarchitecture.ModernArchitecture;
 import hust.soict.globalict.backend.touristattraction.naturalattraction.*;
-import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.Bay;
-import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.Beach;
-import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.Lake;
-import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.River;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -44,7 +42,7 @@ public class AppUI extends Application {
     };
 
     private String[] naturalAttraction = {
-            "Bay", "Beach", "Lake", "River",
+            "Bay", "Beach", "Body of Water", "Lake", "River",
             "Botanical Garden", "Cave", "Island", "Mountain",
             "National Park", "Zoo"
     };
@@ -60,9 +58,16 @@ public class AppUI extends Application {
         title.setFont(Font.font("Calibri",FontWeight.EXTRA_BOLD,26));
         ToggleGroup toggleGroup = new ToggleGroup();
 
+
+//        RadioButton bodyWaterAttractionButton = new RadioButton("Body of Water");
+//        RadioButton naturalAttractionButton = new RadioButton("Natural Attraction");
+
+
+
+        RadioButton touristAttractionButton = new RadioButton("Tourist Attraction");
         RadioButton manmadeButton = new RadioButton("Manmade Attraction");
         RadioButton naturalButton = new RadioButton("Natural Attraction");
-
+        touristAttractionButton.setToggleGroup(toggleGroup);
         manmadeButton.setToggleGroup(toggleGroup);
         naturalButton.setToggleGroup(toggleGroup);
 
@@ -75,37 +80,135 @@ public class AppUI extends Application {
         manmadeChoiceBox.setDisable(true);
         naturalChoiceBox.setDisable(true);
 
+
+
         Button buttonGet = new Button("Get");
         buttonGet.setDisable(true);
         Button buttonExit = new Button("Exit");
+
+
+
+        manmadeButton.setVisible(false);
+        manmadeChoiceBox.setVisible(false);
+        naturalButton.setVisible(false);
+        naturalChoiceBox.setVisible(false);
+
+        ToggleGroup toggleGroup1 = new ToggleGroup();
+        ToggleButton allDataButton1 = new ToggleButton("All");
+        ToggleButton detailDataButton1 = new ToggleButton("Detail");
+        allDataButton1.setToggleGroup(toggleGroup1);
+        detailDataButton1.setToggleGroup(toggleGroup1);
+
+        allDataButton1.setDisable(true);
+        detailDataButton1.setDisable(true);
+
+        allDataButton1.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+            if(!detailDataButton1.isSelected())
+                allDataButton1.setSelected(true);
+            buttonGet.setDisable(false);
+            manmadeButton.setVisible(false);
+            manmadeChoiceBox.setVisible(false);
+            naturalButton.setVisible(false);
+            naturalChoiceBox.setVisible(false);
+        }));
+
+        detailDataButton1.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+            if(!allDataButton1.isSelected())
+                detailDataButton1.setSelected(true);
+            buttonGet.setDisable(true);
+            manmadeButton.setVisible(true);
+            manmadeChoiceBox.setVisible(true);
+            naturalButton.setVisible(true);
+        }));
+
+        ToggleGroup toggleGroup2 = new ToggleGroup();
+        ToggleButton allDataButton2 = new ToggleButton("All");
+        ToggleButton detailDataButton2 = new ToggleButton("Detail");
+        allDataButton2.setToggleGroup(toggleGroup2);
+        detailDataButton2.setToggleGroup(toggleGroup2);
+
+        allDataButton2.setVisible(false);
+        detailDataButton2.setVisible(false);
+
+        allDataButton2.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+            if(!detailDataButton2.isSelected())
+                allDataButton2.setSelected(true);
+            buttonGet.setDisable(false);
+            naturalChoiceBox.setVisible(false);
+            naturalChoiceBox.setDisable(true);
+        }));
+
+        detailDataButton2.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+            if(!allDataButton2.isSelected())
+                detailDataButton2.setSelected(true);
+            buttonGet.setDisable(false);
+            naturalChoiceBox.setVisible(true);
+            naturalChoiceBox.setDisable(false);
+            naturalChoiceBox.show();
+        }));
+
+
 
         toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
                 buttonGet.setDisable(false);
                 RadioButton rb = (RadioButton) t1;
+                if(rb.getText().equals(touristAttractionButton.getText())){
+                    allDataButton1.setSelected(true);
+                    detailDataButton1.setSelected(false);
+                    allDataButton1.setDisable(false);
+                    detailDataButton1.setDisable(false);
+                    manmadeButton.setVisible(false);
+                    manmadeChoiceBox.setVisible(false);
+                    naturalButton.setVisible(false);
+                    naturalChoiceBox.setVisible(false);
+                    allDataButton2.setVisible(false);
+                    detailDataButton2.setVisible(false);
+                }
                 if(rb.getText().equals(manmadeButton.getText())){
+                    buttonGet.setDisable(false);
+                    allDataButton1.setDisable(true);
+                    detailDataButton1.setDisable(true);
+                    allDataButton2.setDisable(true);
+                    detailDataButton2.setDisable(true);
                     manmadeChoiceBox.setDisable(false);
                     manmadeChoiceBox.show();
                     naturalChoiceBox.setDisable(true);
                 }
                 else if(rb.getText().equals(naturalButton.getText())){
-                    naturalChoiceBox.setDisable(false);
-                    naturalChoiceBox.show();
+                    buttonGet.setDisable(true);
+                    allDataButton1.setDisable(true);
+                    detailDataButton1.setDisable(true);
+                    allDataButton2.setVisible(true);
+                    detailDataButton2.setVisible(true);
+                    allDataButton2.setDisable(false);
+                    detailDataButton2.setDisable(false);
+                    allDataButton2.setSelected(true);
                     manmadeChoiceBox.setDisable(true);
                 }
             }
         });
+
+
+
+
         buttonGet.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 RadioButton rb = (RadioButton) toggleGroup.getSelectedToggle();
                 String chosen = null;
+                if(rb.getText().equals(touristAttractionButton.getText())){
+                    chosen = "Tourist Attraction";
+                }
                 if(rb.getText().equals(manmadeButton.getText())){
                     chosen = manmadeChoiceBox.getValue();
                 }
                 else if (rb.getText().equals(naturalButton.getText())){
-                    chosen = naturalChoiceBox.getValue();
+                    if(allDataButton2.isSelected())
+                        chosen = "Natural Attraction";
+                    else if(detailDataButton2.isSelected())
+                        chosen = naturalChoiceBox.getValue();
                 }
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -145,7 +248,9 @@ public class AppUI extends Application {
                     Task<Void> task = new Task<Void>() {
                         @Override
                         protected Void call() throws Exception {
-                            if(finalChosen.equals("Amusement Park"))
+                            if(finalChosen.equals("Tourist Attraction"))
+                                (new TouristAttraction()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Amusement Park"))
                                 (new AmusementPark()).collectDataToTtlFile(stream);
                             else if(finalChosen.equals("Building"))
                                 (new Building()).collectDataToTtlFile(stream);
@@ -165,6 +270,8 @@ public class AppUI extends Application {
                                 (new Bay()).collectDataToTtlFile(stream);
                             else if(finalChosen.equals("Beach"))
                                 (new Beach()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Body of Water"))
+                                (new BodyOfWater()).collectDataToTtlFile(stream);
                             else if(finalChosen.equals("Lake"))
                                 (new Lake()).collectDataToTtlFile(stream);
                             else if(finalChosen.equals("River"))
@@ -177,6 +284,8 @@ public class AppUI extends Application {
                                 (new Island()).collectDataToTtlFile(stream);
                             else if(finalChosen.equals("Mountain"))
                                 (new Mountain()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Natural Attraction"))
+                                (new NaturalAttraction()).collectDataToTtlFile(stream);
                             else if(finalChosen.equals("National Park"))
                                 (new NationalPark()).collectDataToTtlFile(stream);
                             else if(finalChosen.equals("Zoo"))
@@ -210,23 +319,28 @@ public class AppUI extends Application {
         });
 
         GridPane gridPane = new GridPane();
-        gridPane.setMinSize(400,150);
+        gridPane.setMinSize(900,500);
 
-        gridPane.setHgap(10);
-        gridPane.setVgap(30);
+        gridPane.setHgap(100);
+        gridPane.setVgap(100);
         gridPane.setAlignment(Pos.CENTER);
 
         gridPane.add(title,0,0);
-        gridPane.add(manmadeButton,0,1);
+        gridPane.add(touristAttractionButton,0,1);
+        gridPane.add(allDataButton1,1,1);
+        gridPane.add(detailDataButton1,2,1);
 
-        gridPane.add(manmadeChoiceBox,1,1);
-        gridPane.add(naturalButton,0,2);
+        gridPane.add(manmadeButton,0,2);
 
-        gridPane.add(naturalChoiceBox,1,2);
-        gridPane.add(buttonGet,0,3);
-        gridPane.add(buttonExit,1,3);
+        gridPane.add(manmadeChoiceBox,3,2);
+        gridPane.add(naturalButton,0,3);
+        gridPane.add(allDataButton2,1,3);
+        gridPane.add(detailDataButton2,2,3);
+        gridPane.add(naturalChoiceBox,3,3);
+        gridPane.add(buttonGet,0,4);
+        gridPane.add(buttonExit,1,4);
 
-        Scene scene = new Scene(gridPane,500,300);
+        Scene scene = new Scene(gridPane,1000,800);
 
         primaryStage.setTitle("Vietnam Tourism");
         primaryStage.setScene(scene);
