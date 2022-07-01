@@ -1,10 +1,23 @@
 package hust.soict.globalict.frontend;
 
+import hust.soict.globalict.backend.touristattraction.manmadeattraction.Bridge;
+import hust.soict.globalict.backend.touristattraction.manmadeattraction.Cathedral;
+import hust.soict.globalict.backend.touristattraction.manmadeattraction.Museum;
+import hust.soict.globalict.backend.touristattraction.manmadeattraction.Temple;
+import hust.soict.globalict.backend.touristattraction.manmadeattraction.modernarchitecture.AmusementPark;
+import hust.soict.globalict.backend.touristattraction.manmadeattraction.modernarchitecture.Building;
+import hust.soict.globalict.backend.touristattraction.manmadeattraction.modernarchitecture.Hotel;
+import hust.soict.globalict.backend.touristattraction.manmadeattraction.modernarchitecture.ModernArchitecture;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.*;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.Bay;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.Beach;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.Lake;
 import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.River;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -20,12 +33,9 @@ import javafx.stage.StageStyle;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Optional;
-import java.util.zip.DeflaterOutputStream;
 
 
 public class AppUI extends Application {
-
-
     private ChoiceBox<String> manmadeChoiceBox = new ChoiceBox<String>();
     private ChoiceBox<String> naturalChoiceBox = new ChoiceBox<String>();
     private String[] manmadeAttraction = {
@@ -34,12 +44,12 @@ public class AppUI extends Application {
     };
 
     private String[] naturalAttraction = {
-            "Bay", "Beach", "Body of Water", "Lake", "River",
-            "Botanical Garden", "Cave", "Island", "Mountain", "National Park",
-            "Zoo"
+            "Bay", "Beach", "Lake", "River",
+            "Botanical Garden", "Cave", "Island", "Mountain",
+            "National Park", "Zoo"
     };
 
-
+    ByteArrayOutputStream stream = new ByteArrayOutputStream();
     public static void main(String[] args) {
         launch(args);
     }
@@ -47,7 +57,7 @@ public class AppUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         Text title = new Text("Welcome to Vietnam tourism");
-        title.setFont(Font.font("Calibri",FontWeight.MEDIUM,24));
+        title.setFont(Font.font("Calibri",FontWeight.EXTRA_BOLD,26));
         ToggleGroup toggleGroup = new ToggleGroup();
 
         RadioButton manmadeButton = new RadioButton("Manmade Attraction");
@@ -86,21 +96,9 @@ public class AppUI extends Application {
                 }
             }
         });
-
-
-
         buttonGet.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.initStyle(StageStyle.UTILITY);
-                alert.setTitle("Confirmation");
-
-                ButtonType buttonYes = new ButtonType("Yes");
-                ButtonType buttonNo = new ButtonType("No");
-
-                alert.getButtonTypes().setAll(buttonYes,buttonNo);
-
                 RadioButton rb = (RadioButton) toggleGroup.getSelectedToggle();
                 String chosen = null;
                 if(rb.getText().equals(manmadeButton.getText())){
@@ -109,37 +107,98 @@ public class AppUI extends Application {
                 else if (rb.getText().equals(naturalButton.getText())){
                     chosen = naturalChoiceBox.getValue();
                 }
-                alert.setHeaderText("Is this your choice?");
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.initStyle(StageStyle.DECORATED);
+                alert.setTitle("Confirmation");
+                alert.setHeaderText("Press OK to proceed with your choice, else press Cancel to return to main menu.");
                 alert.setContentText("You have selected " + rb.getText() + " - " + chosen);
+
+                TextArea textArea = new TextArea("Connecting...");
+                textArea.setEditable(false);
+                textArea.setWrapText(true);
+
+                textArea.setMaxWidth(Double.MAX_VALUE);
+                textArea.setMaxHeight(Double.MAX_VALUE);
+                GridPane.setVgrow(textArea, Priority.ALWAYS);
+                GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+                GridPane outputContent = new GridPane();
+                outputContent.setMaxWidth(Double.MAX_VALUE);
+                outputContent.add(textArea,0,1);
+                alert.getDialogPane().setExpandableContent(outputContent);
+                textArea.setVisible(false);
+
                 Optional<ButtonType> option = alert.showAndWait();
-                if(option.get() == buttonYes){
-                    Alert output = new Alert(Alert.AlertType.INFORMATION);
-                    output.initStyle(StageStyle.UTILITY);
-                    output.setTitle("Collecting");
-                    output.setHeaderText("Collecting data...");
-                    output.setContentText(chosen);
 
-                    TextArea textArea = new TextArea("Connecting...");
-                    textArea.setEditable(false);
-                    textArea.setWrapText(true);
+                if(option.get() == ButtonType.OK){
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Processing request");
+                    alert.setHeaderText("Collecting data...");
+                    alert.setContentText(chosen);
+                    textArea.setVisible(true);
+                    alert.getDialogPane().setContent(textArea);
 
-                    textArea.setMaxWidth(Double.MAX_VALUE);
-                    textArea.setMaxHeight(Double.MAX_VALUE);
-                    GridPane.setVgrow(textArea, Priority.ALWAYS);
-                    GridPane.setHgrow(textArea, Priority.ALWAYS);
+                    alert.show();
 
-                    GridPane outputContent = new GridPane();
-                    outputContent.setMaxWidth(Double.MAX_VALUE);
-                    outputContent.add(textArea,0,1);
+                    String finalChosen = chosen;
+                    Task<Void> task = new Task<Void>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            if(finalChosen.equals("Amusement Park"))
+                                (new AmusementPark()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Building"))
+                                (new Building()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Hotel"))
+                                (new Hotel()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Modern Architecture"))
+                                (new ModernArchitecture()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Bridge"))
+                                (new Bridge()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Cathedral"))
+                                (new Cathedral()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Museum"))
+                                (new Museum()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Temple"))
+                                (new Temple()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Bay"))
+                                (new Bay()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Beach"))
+                                (new Beach()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Lake"))
+                                (new Lake()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("River"))
+                                (new River()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Botanical Garden"))
+                                (new BotanicalGarden()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Cave"))
+                                (new Cave()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Island"))
+                                (new Island()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Mountain"))
+                                (new Mountain()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("National Park"))
+                                (new NationalPark()).collectDataToTtlFile(stream);
+                            else if(finalChosen.equals("Zoo"))
+                                (new Zoo()).collectDataToTtlFile(stream);
+                            textArea.setText(stream.toString());
+                            return null;
+                        }
+                    };
 
-                    output.getDialogPane().setExpandableContent(outputContent);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    (new River()).collectDataToTtlFile(stream);
-                    textArea.setText(stream.toString());
-                    output.showAndWait();
+                    task.setOnSucceeded(event -> {
+                        Alert notify = new Alert(Alert.AlertType.INFORMATION);
+                        notify.setHeaderText("Task completed.");
+                        notify.setContentText("Collected data is saved as " + finalChosen + ".ttl in project folder.");
+                        notify.show();
+
+                    });
+
+                    Thread t = new Thread(task);
+                    t.setDaemon(true);
+                    t.start();
+
                 }
-
-
             }
         });
 
@@ -151,8 +210,7 @@ public class AppUI extends Application {
         });
 
         GridPane gridPane = new GridPane();
-        gridPane.setMinSize(400,200);
-//        gridPane.setPadding(new Insets(20,20,20,20));
+        gridPane.setMinSize(400,150);
 
         gridPane.setHgap(10);
         gridPane.setVgap(30);
@@ -170,14 +228,9 @@ public class AppUI extends Application {
 
         Scene scene = new Scene(gridPane,500,300);
 
-
-
         primaryStage.setTitle("Vietnam Tourism");
         primaryStage.setScene(scene);
-        primaryStage.initStyle(StageStyle.UTILITY);
+        primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.show();
-
-
-
     }
 }

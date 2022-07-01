@@ -1,11 +1,9 @@
 package hust.soict.globalict.backend;
 
+import hust.soict.globalict.backend.touristattraction.naturalattraction.Mountain;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.Zoo;
 import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.Lake;
 
-/**
- * Hello world!
- *
- */
 public class App {
 	public static void main(String[] args) {
 		System.out.println("--------------------------------");
@@ -27,7 +25,7 @@ public class App {
 //		c1.collectDataToTtlFile();
 //
 //		Mountain m1 = new Mountain();
-//		m1.collectDataToTtlFile();
+//		m1.collectDataToTtlFile(System.out);
 
 	}
 }
