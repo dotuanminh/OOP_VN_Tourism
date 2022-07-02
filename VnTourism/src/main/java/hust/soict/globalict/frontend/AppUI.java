@@ -136,7 +136,8 @@ public class AppUI extends Application {
                 detailDataButton1.setSelected(true);
             buttonGet.setDisable(true);
             manmadeButton.setVisible(true);
-            manmadeChoiceBox.setVisible(true);
+            manmadeChoiceBox.setVisible(false);
+            manmadeChoiceBox.setDisable(true);
             naturalButton.setVisible(true);
         }));
 
@@ -193,6 +194,7 @@ public class AppUI extends Application {
                     detailDataButton1.setDisable(true);
                     allDataButton2.setDisable(true);
                     detailDataButton2.setDisable(true);
+                    manmadeChoiceBox.setVisible(true);
                     manmadeChoiceBox.setDisable(false);
                     manmadeChoiceBox.show();
                     naturalChoiceBox.setDisable(true);
