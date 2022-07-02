@@ -18,9 +18,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
@@ -58,12 +60,6 @@ public class AppUI extends Application {
         title.setFont(Font.font("Calibri",FontWeight.EXTRA_BOLD,26));
         ToggleGroup toggleGroup = new ToggleGroup();
 
-
-//        RadioButton bodyWaterAttractionButton = new RadioButton("Body of Water");
-//        RadioButton naturalAttractionButton = new RadioButton("Natural Attraction");
-
-
-
         RadioButton touristAttractionButton = new RadioButton("Tourist Attraction");
         RadioButton manmadeButton = new RadioButton("Manmade Attraction");
         RadioButton naturalButton = new RadioButton("Natural Attraction");
@@ -80,13 +76,9 @@ public class AppUI extends Application {
         manmadeChoiceBox.setDisable(true);
         naturalChoiceBox.setDisable(true);
 
-
-
         Button buttonGet = new Button("Get");
         buttonGet.setDisable(true);
         Button buttonExit = new Button("Exit");
-
-
 
         manmadeButton.setVisible(false);
         manmadeChoiceBox.setVisible(false);
@@ -147,8 +139,6 @@ public class AppUI extends Application {
             naturalChoiceBox.show();
         }));
 
-
-
         toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
@@ -190,9 +180,6 @@ public class AppUI extends Application {
             }
         });
 
-
-
-
         buttonGet.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -214,10 +201,10 @@ public class AppUI extends Application {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.initStyle(StageStyle.DECORATED);
                 alert.setTitle("Confirmation");
-                alert.setHeaderText("Press OK to proceed with your choice, else press Cancel to return to main menu.");
+                alert.setHeaderText("Press OK to proceed with your choice, or press Cancel to discard.");
                 alert.setContentText("You have selected " + rb.getText() + " - " + chosen);
 
-                TextArea textArea = new TextArea("Connecting...");
+                TextArea textArea = new TextArea("Working...");
                 textArea.setEditable(false);
                 textArea.setWrapText(true);
 
@@ -241,6 +228,7 @@ public class AppUI extends Application {
                     alert.setContentText(chosen);
                     textArea.setVisible(true);
                     alert.getDialogPane().setContent(textArea);
+
 
                     alert.show();
 
@@ -297,10 +285,10 @@ public class AppUI extends Application {
 
                     task.setOnSucceeded(event -> {
                         Alert notify = new Alert(Alert.AlertType.INFORMATION);
-                        notify.setHeaderText("Task completed.");
-                        notify.setContentText("Collected data is saved as " + finalChosen + ".ttl in project folder.");
+                        notify.setHeaderText("Task completed");
+                        notify.setContentText("Collected data is saved as " + finalChosen.replaceAll("\\s","") + ".ttl in project folder.");
                         notify.show();
-
+                        alert.setHeaderText("Completed");
                     });
 
                     Thread t = new Thread(task);
@@ -319,28 +307,32 @@ public class AppUI extends Application {
         });
 
         GridPane gridPane = new GridPane();
-        gridPane.setMinSize(900,500);
+        gridPane.setMinSize(400,200);
+        gridPane.setPadding(new Insets(10,10,10,10));
 
-        gridPane.setHgap(100);
-        gridPane.setVgap(100);
+        gridPane.getColumnConstraints().add(new ColumnConstraints(175));
+
+        gridPane.setVgap(10);
         gridPane.setAlignment(Pos.CENTER);
 
         gridPane.add(title,0,0);
+
         gridPane.add(touristAttractionButton,0,1);
         gridPane.add(allDataButton1,1,1);
         gridPane.add(detailDataButton1,2,1);
 
         gridPane.add(manmadeButton,0,2);
-
         gridPane.add(manmadeChoiceBox,3,2);
+
         gridPane.add(naturalButton,0,3);
         gridPane.add(allDataButton2,1,3);
         gridPane.add(detailDataButton2,2,3);
         gridPane.add(naturalChoiceBox,3,3);
+
         gridPane.add(buttonGet,0,4);
         gridPane.add(buttonExit,1,4);
 
-        Scene scene = new Scene(gridPane,1000,800);
+        Scene scene = new Scene(gridPane);
 
         primaryStage.setTitle("Vietnam Tourism");
         primaryStage.setScene(scene);
