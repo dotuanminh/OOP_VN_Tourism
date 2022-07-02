@@ -30,6 +30,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.http.util.NetUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Optional;
@@ -38,15 +39,21 @@ import java.util.Optional;
 public class AppUI extends Application {
     private ChoiceBox<String> manmadeChoiceBox = new ChoiceBox<String>();
     private ChoiceBox<String> naturalChoiceBox = new ChoiceBox<String>();
+
+    private ChoiceBox<String> bodyOfWaterChoiceBox = new ChoiceBox<String>();
     private String[] manmadeAttraction = {
             "Amusement Park", "Building", "Hotel", "Modern Architecture",
             "Bridge", "Cathedral", "Museum", "Temple"
     };
 
     private String[] naturalAttraction = {
-            "Bay", "Beach", "Body of Water", "Lake", "River",
+            "Body of Water",
             "Botanical Garden", "Cave", "Island", "Mountain",
             "National Park", "Zoo"
+    };
+
+    private String[] bodyofWater = {
+            "Body of Water", "Bay", "Beach", "Lake", "River"
     };
 
     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -69,12 +76,15 @@ public class AppUI extends Application {
 
         manmadeChoiceBox.getItems().addAll(manmadeAttraction);
         naturalChoiceBox.getItems().addAll(naturalAttraction);
+        bodyOfWaterChoiceBox.getItems().addAll(bodyofWater);
 
         manmadeChoiceBox.getSelectionModel().selectFirst();
         naturalChoiceBox.getSelectionModel().selectFirst();
+        bodyOfWaterChoiceBox.getSelectionModel().selectFirst();
 
         manmadeChoiceBox.setDisable(true);
         naturalChoiceBox.setDisable(true);
+        bodyOfWaterChoiceBox.setDisable(true);
 
         Button buttonGet = new Button("Get");
         buttonGet.setDisable(true);
@@ -84,6 +94,22 @@ public class AppUI extends Application {
         manmadeChoiceBox.setVisible(false);
         naturalButton.setVisible(false);
         naturalChoiceBox.setVisible(false);
+        bodyOfWaterChoiceBox.setVisible(false);
+
+        naturalChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+                buttonGet.setDisable(false);
+                if(naturalChoiceBox.getItems().get((Integer)number2).equals("Body of Water")){
+                    bodyOfWaterChoiceBox.setDisable(false);
+                    bodyOfWaterChoiceBox.setVisible(true);
+                }
+                else{
+                    bodyOfWaterChoiceBox.setDisable(true);
+                    bodyOfWaterChoiceBox.setVisible(false);
+                }
+            }
+        });
 
         ToggleGroup toggleGroup1 = new ToggleGroup();
         ToggleButton allDataButton1 = new ToggleButton("All");
@@ -102,6 +128,7 @@ public class AppUI extends Application {
             manmadeChoiceBox.setVisible(false);
             naturalButton.setVisible(false);
             naturalChoiceBox.setVisible(false);
+            bodyOfWaterChoiceBox.setVisible(false);
         }));
 
         detailDataButton1.selectedProperty().addListener(((observable, oldValue, newValue) -> {
@@ -128,6 +155,7 @@ public class AppUI extends Application {
             buttonGet.setDisable(false);
             naturalChoiceBox.setVisible(false);
             naturalChoiceBox.setDisable(true);
+            bodyOfWaterChoiceBox.setVisible(false);
         }));
 
         detailDataButton2.selectedProperty().addListener(((observable, oldValue, newValue) -> {
@@ -136,7 +164,10 @@ public class AppUI extends Application {
             buttonGet.setDisable(false);
             naturalChoiceBox.setVisible(true);
             naturalChoiceBox.setDisable(false);
-            naturalChoiceBox.show();
+            if(naturalChoiceBox.getSelectionModel().getSelectedItem().equals("Body of Water")) {
+                bodyOfWaterChoiceBox.setVisible(true);
+                bodyOfWaterChoiceBox.setDisable(false);
+            }
         }));
 
         toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
@@ -194,8 +225,14 @@ public class AppUI extends Application {
                 else if (rb.getText().equals(naturalButton.getText())){
                     if(allDataButton2.isSelected())
                         chosen = "Natural Attraction";
-                    else if(detailDataButton2.isSelected())
-                        chosen = naturalChoiceBox.getValue();
+                    else if(detailDataButton2.isSelected()){
+                        if (naturalChoiceBox.getValue().equals("Body of Water")){
+                            chosen = bodyOfWaterChoiceBox.getValue();
+                        }
+                        else{
+                            chosen = naturalChoiceBox.getValue();
+                        }
+                    }
                 }
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -328,6 +365,7 @@ public class AppUI extends Application {
         gridPane.add(allDataButton2,1,3);
         gridPane.add(detailDataButton2,2,3);
         gridPane.add(naturalChoiceBox,3,3);
+        gridPane.add(bodyOfWaterChoiceBox,4,3);
 
         gridPane.add(buttonGet,0,4);
         gridPane.add(buttonExit,1,4);
