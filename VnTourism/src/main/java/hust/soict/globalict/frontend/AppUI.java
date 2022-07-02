@@ -196,6 +196,8 @@ public class AppUI extends Application {
                     manmadeChoiceBox.setDisable(false);
                     manmadeChoiceBox.show();
                     naturalChoiceBox.setDisable(true);
+                    bodyOfWaterChoiceBox.setDisable(true);
+                    bodyOfWaterChoiceBox.setVisible(false);
                 }
                 else if(rb.getText().equals(naturalButton.getText())){
                     buttonGet.setDisable(true);
