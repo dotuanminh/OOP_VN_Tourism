@@ -320,6 +320,7 @@ public class AppUI extends Application {
                             else if(finalChosen.equals("Zoo"))
                                 (new Zoo()).collectDataToTtlFile(stream);
                             textArea.setText(stream.toString());
+                            stream.reset();
                             return null;
                         }
                     };
