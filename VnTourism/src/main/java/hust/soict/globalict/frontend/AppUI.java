@@ -1,5 +1,8 @@
 package hust.soict.globalict.frontend;
 
+import java.io.ByteArrayOutputStream;
+import java.util.Optional;
+
 import hust.soict.globalict.backend.touristattraction.TouristAttraction;
 import hust.soict.globalict.backend.touristattraction.manmadeattraction.Bridge;
 import hust.soict.globalict.backend.touristattraction.manmadeattraction.Cathedral;
@@ -9,8 +12,18 @@ import hust.soict.globalict.backend.touristattraction.manmadeattraction.modernar
 import hust.soict.globalict.backend.touristattraction.manmadeattraction.modernarchitecture.Building;
 import hust.soict.globalict.backend.touristattraction.manmadeattraction.modernarchitecture.Hotel;
 import hust.soict.globalict.backend.touristattraction.manmadeattraction.modernarchitecture.ModernArchitecture;
-import hust.soict.globalict.backend.touristattraction.naturalattraction.*;
-import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.*;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.BotanicalGarden;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.Cave;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.Island;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.Mountain;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.NationalPark;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.NaturalAttraction;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.Zoo;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.Bay;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.Beach;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.BodyOfWater;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.Lake;
+import hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater.River;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -21,7 +34,15 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -30,10 +51,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.apache.http.util.NetUtils;
-
-import java.io.ByteArrayOutputStream;
-import java.util.Optional;
 
 
 public class AppUI extends Application {
