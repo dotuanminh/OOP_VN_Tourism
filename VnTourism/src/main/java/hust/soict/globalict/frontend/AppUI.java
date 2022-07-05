@@ -335,6 +335,9 @@ public class AppUI extends Application {
                             else if(finalChosen.equals("National Park"))
                                 (new NationalPark()).collectDataToTtlFile(stream);
                             else if(finalChosen.equals("Zoo"))
+                            	//Zoo zoo =new Zoo();
+                            	//zoo.collectDataToTtlFile();
+                            	//textArea.setText(zoo.);
                                 (new Zoo()).collectDataToTtlFile(stream);
                             textArea.setText(stream.toString());
                             stream.reset();

@@ -1,6 +1,11 @@
  package hust.soict.globalict.backend.dataprocess;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
@@ -39,8 +44,6 @@ public interface IDataProcess {
 	}
 
 	public default void collectDataToTtlFile() {
-//		System.out.println("Collecting data.......");
-//		System.out.println("---------------------------------------------------------------------------");
 		String inputQuery=this.createSparqlQuery();
 		Model inModel = RDFDataMgr.loadModel(this.createRawFileName());
 		try (QueryExecution qExe = QueryExecution.create(inputQuery, inModel)) {
@@ -48,10 +51,6 @@ public interface IDataProcess {
 			try {
 				FileWriter out = new FileWriter(this.createFileName());
 				results.write(out, "TURTLE");
-				results.write(System.out, "TURTLE");
-//				System.out.println("---------------------------------------------------------------------------");
-//				System.out.println("Collecting data successfully...");
-//				System.out.println("This file has been saved to "+this.createFileName()+" in the project");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -61,8 +60,6 @@ public interface IDataProcess {
 	}
 
 	public default void collectDataToTtlFile(OutputStream stream){
-//		System.out.println("Collecting data.......");
-//		System.out.println("---------------------------------------------------------------------------");
 		String inputQuery=this.createSparqlQuery();
 		Model inModel = RDFDataMgr.loadModel(this.createRawFileName());
 		try (QueryExecution qExe = QueryExecution.create(inputQuery, inModel)) {
@@ -71,18 +68,32 @@ public interface IDataProcess {
 				FileWriter out = new FileWriter(this.createFileName());
 				results.write(out, "TURTLE");
 				results.write(stream, "TURTLE");
-//				System.out.println("---------------------------------------------------------------------------");
-//				System.out.println("Collecting data successfully...");
-//				System.out.println("This file has been saved to "+this.createFileName()+" in the project");
 			} catch (IOException e) {
 				e.printStackTrace(new PrintStream(stream));
-//				throw new IOException();
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace(new PrintStream(stream));
-//			throw new Exception();
 		}
 	}
+	
+//	public default String returnCollectedDataAsAString() {
+//		String outputString=null;
+//		// Creating a path choosing file from local
+//        // directory by creating an object of Path class
+//        Path fileName
+//            = Path.of(this.createFileName());
+// 
+//        // Now calling Files.readString() method to
+//        // read the file
+//        try {
+//        	outputString = Files.readString(fileName);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			outputString=e.getMessage();
+//		}
+//        if(outputString.equals(null)) System.out.println("There is something wrong.....Try Again");
+//        return outputString;
+//	}
 }
 	

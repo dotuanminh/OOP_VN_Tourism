@@ -1,6 +1,6 @@
 package hust.soict.globalict.backend.rdfconstant;
 
-public class ObjectToCollect {
+public final class ObjectToCollect {
 	public final static String OBJECT_BAY = "dbc:Bays_of_Vietnam.";
 	public final static String OBJECT_BEACH = "dbc:Beaches_of_Vietnam.";
 	public final static String OBJECT_LAKE = "dbc:Lakes_of_Vietnam.";

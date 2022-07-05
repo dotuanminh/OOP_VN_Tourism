@@ -1,6 +1,6 @@
 package hust.soict.globalict.backend.rdfconstant;
 
-public class Prefix {
+public final class Prefix {
 	public static final String PREFIX="PREFIX dbp:	<http://dbpedia.org/property/>\n" 
 									+ "PREFIX dbo: <http://dbpedia.org/ontology/> \n"
 									+ "PREFIX dbc:	<http://dbpedia.org/resource/Category:>\n"
