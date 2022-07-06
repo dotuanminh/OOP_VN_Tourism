@@ -9,6 +9,7 @@ public class Island extends NaturalAttraction{
 	private String populationDensity;
 	public Island() {
 		super();
+		//Each attribute will be initialized with the information we want to query, will be used inside the sparql query. 
 		this.area="?place dbo:areaTotal ?area.";
 		this.population="?place dbp:population ?population.";
 		this.populationDensity="?place dbp:densityKm ?populationDensity.";
@@ -24,7 +25,10 @@ public class Island extends NaturalAttraction{
 	}
 	@Override
 	public String createSparqlQuery() {
+		//Create a raw file
 		this.createRawTtlFile(ObjectToCollect.OBJECT_ISLAND);
+		
+		//Create the sparql query using all the attributes
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
 				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_ISLAND + "\r\n"
 				+ this.getName()+"\r\n"

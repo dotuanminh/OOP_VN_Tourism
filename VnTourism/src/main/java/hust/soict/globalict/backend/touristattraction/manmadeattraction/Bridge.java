@@ -20,6 +20,7 @@ public class Bridge extends ManmadeAttraction {
 
 	public Bridge() {
 		super();
+		//Each attribute will be initialized with the information we want to query, will be used inside the sparql query. 
 		this.length = "?place dbo:length ?length.";
 		this.type = "?place dbo:type ?type.";
 		this.crosses = "?place dbo:crosses ?crosses.";
@@ -84,7 +85,10 @@ public class Bridge extends ManmadeAttraction {
 
 	@Override
 	public String createSparqlQuery() {
+		//Create a raw file
 		this.createRawTtlFile(ObjectToCollect.OBJECT_BRIDGE);
+		
+		//Create the sparql query using all the attributes
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
 				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_BRIDGE + "\r\n"
 				+ this.getName() + "\r\n"

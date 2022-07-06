@@ -10,7 +10,10 @@ public class Zoo extends NaturalAttraction {
 
     @Override
     public String createSparqlQuery() {
+    	//Create a raw file
 		this.createRawTtlFile(ObjectToCollect.OBJECT_ZOO);
+		
+		//Create the sparql query using all the attributes
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
 				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_ZOO + "\r\n"
 				+ this.getName()+"\r\n"

@@ -10,8 +10,11 @@ public class BotanicalGarden extends NaturalAttraction{
 	}
     @Override
     public String createSparqlQuery() {
+    	//Create a raw file
     	this.createRawTtlFile(ObjectToCollect.OBJECT_GARDEN);
-		return Prefix.PREFIX + "CONSTRUCT{\r\n"
+    	
+    	//Create the sparql query using all the attributes
+    	return Prefix.PREFIX + "CONSTRUCT{\r\n"
 				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_GARDEN + "\r\n"
 				+ this.getName()+"\r\n"
 				+ this.getComment()+"\r\n"

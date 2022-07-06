@@ -1,31 +1,20 @@
-package hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater;
+package hust.soict.globalict.backend.touristattraction.naturalattraction;
 
 import hust.soict.globalict.backend.rdfconstant.ObjectToCollect;
 import hust.soict.globalict.backend.rdfconstant.Prefix;
-import hust.soict.globalict.backend.touristattraction.naturalattraction.NaturalAttraction;
 
-public class BodyOfWater extends NaturalAttraction {
-	private String length;
-
-	public BodyOfWater() {
+public class Beach extends BodyOfWater{
+	public Beach() {
 		super();
-		this.length = "?place dbo:length ?length.";
-	}
-
-	public String getLength() {
-		return this.length;
 	}
 	@Override
 	public String createSparqlQuery() {
-		this.createRawTtlFile(ObjectToCollect.OBJECT_BODY_OF_WATER);
-		String unionQuery="";
-		int size= ObjectToCollect.OBJECT_BODY_OF_WATER.length;
-		for (int i=0;i<size;++i) {
-			if(i==0)unionQuery= unionQuery+ "{?place dbo:wikiPageWikiLink "+ObjectToCollect.OBJECT_BODY_OF_WATER[i]+"}\r\n";
-			else unionQuery= unionQuery+ "UNION \r\n"
-					+ "{?place dbo:wikiPageWikiLink "+ObjectToCollect.OBJECT_BODY_OF_WATER[i]+"}\r\n";
-		}
+		//Create a raw file
+		this.createRawTtlFile(ObjectToCollect.OBJECT_BEACH);
+		
+		//Create the sparql query using all the attributes
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_BEACH + "\r\n"
 				+ this.getName()+"\r\n"
 				+ this.getComment()+"\r\n"
 				+ this.getGeoPoint()+"\r\n"
@@ -35,7 +24,7 @@ public class BodyOfWater extends NaturalAttraction {
 				+ this.getCountry()+"\r\n"
 				+ this.getLength()+"\r\n"
 				+ "} WHERE{\r\n"
-				+unionQuery
+				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_BEACH + "\r\n"
 				+ "OPTIONAL {"+ this.getName()+"}\r\n"
 				+ "OPTIONAL {"+ this.getComment()+"}\r\n"
 				+ "OPTIONAL {"+ this.getGeoPoint()+"}\r\n"
@@ -44,7 +33,7 @@ public class BodyOfWater extends NaturalAttraction {
 				+ "OPTIONAL {"+ this.getLocation()+"}\r\n"
 				+ "OPTIONAL {"+ this.getCountry()+"}\r\n"
 				+ "OPTIONAL {"+ this.getLength()+"}\r\n"
-				+ "FILTER ( LANG ( ?comment ) = 'en' )\r\n"
+				+ "FILTER ( LANG ( ?comment ) = 'en' ).\r\n"
 				+ "}";
 	}
 }

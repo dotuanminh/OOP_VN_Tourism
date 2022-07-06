@@ -1,5 +1,6 @@
 package hust.soict.globalict.backend.rdfconstant;
 
+//This class store all the prefixes in the sparql query
 public final class Prefix {
 	public static final String PREFIX="PREFIX dbp:	<http://dbpedia.org/property/>\n" 
 									+ "PREFIX dbo: <http://dbpedia.org/ontology/> \n"

@@ -1,4 +1,4 @@
- package hust.soict.globalict.backend.dataprocess;
+package hust.soict.globalict.backend.dataprocess;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,85 +15,73 @@ import org.apache.jena.riot.RDFDataMgr;
 import hust.soict.globalict.backend.rdfconstant.Prefix;
 
 public interface IDataProcess {
+	// This function creates a sparql query to query data
 	public String createSparqlQuery();
 
+	// This function creates a file name of the information we want to get
 	public default String createFileName() {
 		return this.getClass().getSimpleName() + ".ttl";
 	};
 
+	// This function creates a file name for the whole data we query from the
+	// internet: rawRDF_+filename
 	public default String createRawFileName() {
 		return "rawRDF_" + this.createFileName();
 	};
 
-	public default void createRawTtlFile(String...object) {
+	// This function query all data from the internet and store it in a raw ttl file
+	public default void createRawTtlFile(String... object) {
 		try {
+			// Create the raw file we want to store the queried data
 			FileWriter out = new FileWriter(this.createRawFileName());
-			for (String i:object) {
+			for (String i : object) {
+				// Sparql query to query all the data from the site we want
 				String s1 = Prefix.PREFIX + "CONSTRUCT {\r\n" + "    ?s ?p ?o\r\n" + "}\r\n" + "WHERE {\r\n"
 						+ "    ?s dbo:wikiPageWikiLink " + i + "\r\n" + "    ?s ?p ?o.\r\n" + "}";
+
+				// Query it from the site http://dbpedia.org/sparql
 				org.apache.jena.query.Query query = QueryFactory.create(s1);
-				QueryExecution qExe = QueryExecution.service("http://dbpedia.org/sparql").query(query).timeout(50000).build();
+				QueryExecution qExe = QueryExecution.service("http://dbpedia.org/sparql").query(query).timeout(50000)
+						.build();
 				Model results = qExe.execConstruct();
+
+				// Write it in raw file
 				results.write(out, "TURTLE");
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public default void collectDataToTtlFile() {
-		String inputQuery=this.createSparqlQuery();
-		Model inModel = RDFDataMgr.loadModel(this.createRawFileName());
-		try (QueryExecution qExe = QueryExecution.create(inputQuery, inModel)) {
-			Model results = qExe.execConstruct();
-			try {
-				FileWriter out = new FileWriter(this.createFileName());
-				results.write(out, "TURTLE");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	// This function collects data to an .ttl file
+	// Also store it in OutputStream stream to print it on UI Screen
+	public default void collectDataToTtlFile(OutputStream stream) {
+		// Create the query
+		String inputQuery = this.createSparqlQuery();
 
-	public default void collectDataToTtlFile(OutputStream stream){
-		String inputQuery=this.createSparqlQuery();
+		// Load the raw file that we take data from
 		Model inModel = RDFDataMgr.loadModel(this.createRawFileName());
+
+		// Start extracting data using Sparql
 		try (QueryExecution qExe = QueryExecution.create(inputQuery, inModel)) {
 			Model results = qExe.execConstruct();
 			try {
+				// Write the data we extracted in file
 				FileWriter out = new FileWriter(this.createFileName());
 				results.write(out, "TURTLE");
+
+				// Write the data we extracted in stream to put in on UI screen
 				results.write(stream, "TURTLE");
 			} catch (IOException e) {
+				// Catch errors
 				e.printStackTrace(new PrintStream(stream));
 			}
 
 		} catch (Exception e) {
+			// Catch errors
 			e.printStackTrace(new PrintStream(stream));
 		}
 	}
-	
-//	public default String returnCollectedDataAsAString() {
-//		String outputString=null;
-//		// Creating a path choosing file from local
-//        // directory by creating an object of Path class
-//        Path fileName
-//            = Path.of(this.createFileName());
-// 
-//        // Now calling Files.readString() method to
-//        // read the file
-//        try {
-//        	outputString = Files.readString(fileName);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			outputString=e.getMessage();
-//		}
-//        if(outputString.equals(null)) System.out.println("There is something wrong.....Try Again");
-//        return outputString;
-//	}
 }
-	

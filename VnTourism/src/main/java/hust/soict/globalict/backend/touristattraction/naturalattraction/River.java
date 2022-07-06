@@ -1,4 +1,4 @@
-package hust.soict.globalict.backend.touristattraction.naturalattraction.bodyofwater;
+package hust.soict.globalict.backend.touristattraction.naturalattraction;
 
 import hust.soict.globalict.backend.rdfconstant.ObjectToCollect;
 import hust.soict.globalict.backend.rdfconstant.Prefix;
@@ -14,6 +14,7 @@ public class River extends BodyOfWater {
 
 	public River() {
 		super();
+		//Each attribute will be initialized with the information we want to query, will be used inside the sparql query. 
 		this.sourceLocation = "?place dbp:source1Location  ?sourceLocation.";
 		this.mouthLocation = "?place dbo:mouthPlace ?mouthLocation.";
 		this.mouthElevation = "?place dbo:mouthElevation ?mouthElevation.";
@@ -48,7 +49,10 @@ public class River extends BodyOfWater {
 	
 	@Override
 	public String createSparqlQuery() {
+		//Create a raw file
 		this.createRawTtlFile(ObjectToCollect.OBJECT_RIVER);
+		
+		//Create the sparql query using all the attributes
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
 				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_RIVER + "\r\n"
 				+ this.getName()+"\r\n"

@@ -10,6 +10,8 @@ public class Temple extends ManmadeAttraction{
     private String architecture;
 
     public Temple() {
+    	super();
+		//Each attribute will be initialized with the information we want to query, will be used inside the sparql query. 
         this.religiousAffiliation = "?place dbp:religiousAffiliation ?religiousAffiliation.";
         this.deity = "?place dbp:deity ?deity.";
         this.architecture = "?place dbp:architecture ?architecture.";
@@ -29,7 +31,10 @@ public class Temple extends ManmadeAttraction{
 
     @Override
 	public String createSparqlQuery() {
+    	//Create a raw file
 		this.createRawTtlFile(ObjectToCollect.OBJECT_TEMPLE);
+		
+		//Create the sparql query using all the attributes
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
 				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_TEMPLE + "\r\n"
 				+ this.getName() + "\r\n"

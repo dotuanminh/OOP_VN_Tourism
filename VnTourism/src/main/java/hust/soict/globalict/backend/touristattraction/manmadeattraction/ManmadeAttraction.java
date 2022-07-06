@@ -10,8 +10,12 @@ public class ManmadeAttraction extends TouristAttraction {
     }
     @Override
 	public String createSparqlQuery() {
+    	//Create a raw file
     	this.createRawTtlFile(ObjectToCollect.OBJECT_MANMADE_ATTRACTION);
-		String unionQuery="";
+		
+
+    	//Create the sparql query using all the attributes
+    	String unionQuery="";
 		int size= ObjectToCollect.OBJECT_MANMADE_ATTRACTION.length;
 		for (int i=0;i<size;++i) {
 			if(i==0)unionQuery= unionQuery+ "{?place dbo:wikiPageWikiLink "+ObjectToCollect.OBJECT_MANMADE_ATTRACTION[i]+"}\r\n";

@@ -1,5 +1,6 @@
 package hust.soict.globalict.backend.rdfconstant;
 
+//This class store all the objects that we want to query in
 public final class ObjectToCollect {
 	public final static String OBJECT_BAY = "dbc:Bays_of_Vietnam.";
 	public final static String OBJECT_BEACH = "dbc:Beaches_of_Vietnam.";

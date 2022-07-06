@@ -14,6 +14,7 @@ public class TouristAttraction implements IDataProcess{
 	private String country;
 
 	public TouristAttraction() {
+		//Each attribute will be initialized with the information we want to query, will be used inside the sparql query. 
 		this.name = "?place dbp:name ?name.";
 		this.comment = "?place rdfs:comment ?comment.";
 		this.geoPoint = "?place georss:point ?geoPoint.";
@@ -53,7 +54,10 @@ public class TouristAttraction implements IDataProcess{
 
 	@Override
 	public String createSparqlQuery() {
+		//Create a raw file
 		this.createRawTtlFile(ObjectToCollect.OBJECT_TOURIST_ATTRACTION);
+		
+		//Create the sparql query using all the attributes
 		String unionQuery="";
 		int size= ObjectToCollect.OBJECT_TOURIST_ATTRACTION.length;
 		for (int i=0;i<size;++i) {

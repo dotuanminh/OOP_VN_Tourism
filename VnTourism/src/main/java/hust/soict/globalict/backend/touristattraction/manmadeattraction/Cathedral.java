@@ -12,7 +12,7 @@ public class Cathedral extends ManmadeAttraction {
 
     public Cathedral() {
 		super();
-		
+		//Each attribute will be initialized with the information we want to query, will be used inside the sparql query. 
         this.denomination = "?place dbp:denomination ?denomination.";
         this.functionalStatus = "?place dbp:functionalStatus ?functionalStatus.";
         this.architecturalStyle = "?place dbp:architecturalStyle ?architecturalStyle.";
@@ -37,7 +37,10 @@ public class Cathedral extends ManmadeAttraction {
 
     @Override
 	public String createSparqlQuery() {
+    	//Create a raw file
 		this.createRawTtlFile(ObjectToCollect.OBJECT_CATHEDRAL);
+		
+		//Create the sparql query using all the attributes
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
 				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_CATHEDRAL + "\r\n"
 				+ this.getName() + "\r\n"

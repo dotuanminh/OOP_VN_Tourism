@@ -1,4 +1,4 @@
-package hust.soict.globalict.backend.touristattraction.manmadeattraction.modernarchitecture;
+package hust.soict.globalict.backend.touristattraction.manmadeattraction;
 
 import hust.soict.globalict.backend.rdfconstant.ObjectToCollect;
 import hust.soict.globalict.backend.rdfconstant.Prefix;
@@ -17,6 +17,7 @@ public class Building extends ModernArchitecture {
 
 	public Building() {
 		super();
+		//Each attribute will be initialized with the information we want to query, will be used inside the sparql query. 
 		this.architect = "?place dbo:architect ?architect.";
 		this.architecturalStyle = "?place dbo:architecturalStyle ?architecturalStyle.";
 		this.buildingEndDate = "?place dbo:buildingEndDate ?buildingEndDate.";
@@ -66,7 +67,10 @@ public class Building extends ModernArchitecture {
 
 	@Override
 	public String createSparqlQuery() {
+		//Create a raw file
 		this.createRawTtlFile(ObjectToCollect.OBJECT_BUILDING);
+		
+		//Create the sparql query using all the attributes
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
 				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_BUILDING + "\r\n"
 				+ this.getName() + "\r\n"

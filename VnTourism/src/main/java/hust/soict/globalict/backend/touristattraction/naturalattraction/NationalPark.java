@@ -12,6 +12,7 @@ public class NationalPark extends NaturalAttraction {
 
     public NationalPark() {
         super();
+		//Each attribute will be initialized with the information we want to query, will be used inside the sparql query. 
         this.areaTotal = "?place dbo:areaTotal ?areaTotal.";
         this.nearestCity = "?place dbo:nearestCity ?nearestCity.";
         this.established = "?place dbo:established ?established.";
@@ -36,7 +37,10 @@ public class NationalPark extends NaturalAttraction {
 
     @Override
     public String createSparqlQuery() {
+    	//Create a raw file
         this.createRawTtlFile(ObjectToCollect.OBJECT_NATIONALPARK);
+        
+        //Create the sparql query using all the attributes
         return Prefix.PREFIX + "CONSTRUCT{\r\n"
                 + "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_NATIONALPARK + "\r\n"
                 + this.getName() + "\r\n"

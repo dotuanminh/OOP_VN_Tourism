@@ -11,7 +11,10 @@ public class Museum extends ManmadeAttraction {
 
 	@Override
 	public String createSparqlQuery() {
+		//Create a raw file
 		this.createRawTtlFile(ObjectToCollect.OBJECT_MUSEUM);
+		
+		//Create the sparql query using all the attributes
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
 				+ "?place dbo:wikiPageWikiLink " + ObjectToCollect.OBJECT_MUSEUM + "\r\n"
 				+ this.getName() + "\r\n"

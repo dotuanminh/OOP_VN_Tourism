@@ -12,6 +12,7 @@ public class Cave extends NaturalAttraction{
 	private String entrance;
 	public Cave() {
 		super();
+		//Each attribute will be initialized with the information we want to query, will be used inside the sparql query. 
 		this.depth="?place dbo:depth ?depth.";
 		this.length="?place dbo:length ?length.";
 		this.dicovery="?place dbp:discovery ?discover.";
@@ -35,7 +36,10 @@ public class Cave extends NaturalAttraction{
 	}
 	@Override
 	public String createSparqlQuery() {
+		//Create a raw file
 		this.createRawTtlFile(ObjectToCollect.OBJECT_CAVE);
+		
+		//Create the sparql query using all the attributes
 		return Prefix.PREFIX + "CONSTRUCT{\r\n"
 				+ "?place dbo:wikiPageWikiLink "+ ObjectToCollect.OBJECT_CAVE + "\r\n"
 				+ this.getName()+"\r\n"

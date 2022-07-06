@@ -1,4 +1,4 @@
-package hust.soict.globalict.backend.touristattraction.manmadeattraction.modernarchitecture;
+package hust.soict.globalict.backend.touristattraction.manmadeattraction;
 
 import hust.soict.globalict.backend.rdfconstant.ObjectToCollect;
 import hust.soict.globalict.backend.rdfconstant.Prefix;
@@ -11,7 +11,7 @@ public class ModernArchitecture extends ManmadeAttraction {
 
 	public ModernArchitecture() {
 		super();
-
+		//Each attribute will be initialized with the information we want to query, will be used inside the sparql query. 
 		this.openingDate = "?place dbp:openingDate ?openingDate.";
 		this.owner = "?place dbp:owner ?owner.";
 	}
@@ -25,7 +25,10 @@ public class ModernArchitecture extends ManmadeAttraction {
 	}
 	@Override
 	public String createSparqlQuery() {
+		//Create a raw file
 		this.createRawTtlFile(ObjectToCollect.OBJECT_MODERN_ARCHITECTURE);
+		
+		//Create the sparql query using all the attributes
 		String unionQuery="";
 		int size= ObjectToCollect.OBJECT_MODERN_ARCHITECTURE.length;
 		for (int i=0;i<size;++i) {
