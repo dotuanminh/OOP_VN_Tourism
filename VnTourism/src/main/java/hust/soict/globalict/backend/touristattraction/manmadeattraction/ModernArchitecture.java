@@ -2,7 +2,6 @@ package hust.soict.globalict.backend.touristattraction.manmadeattraction;
 
 import hust.soict.globalict.backend.rdfconstant.ObjectToCollect;
 import hust.soict.globalict.backend.rdfconstant.Prefix;
-import hust.soict.globalict.backend.touristattraction.manmadeattraction.ManmadeAttraction;
 
 public class ModernArchitecture extends ManmadeAttraction {
 
