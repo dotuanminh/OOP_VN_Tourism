@@ -1,5 +1,6 @@
 package hust.soict.globalict.backend.dataprocess;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -72,6 +73,9 @@ public interface IDataProcess {
 
 				// Write the data we extracted in stream to put in on UI screen
 				results.write(stream, "TURTLE");
+				
+				//Delete the raw file after extracting data from it
+				(new File(this.createRawFileName())).delete() ;  
 			} catch (IOException e) {
 				// Catch errors
 				e.printStackTrace(new PrintStream(stream));
