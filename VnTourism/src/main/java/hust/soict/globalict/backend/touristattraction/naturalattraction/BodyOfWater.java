@@ -2,7 +2,6 @@ package hust.soict.globalict.backend.touristattraction.naturalattraction;
 
 import hust.soict.globalict.backend.rdfconstant.ObjectToCollect;
 import hust.soict.globalict.backend.rdfconstant.Prefix;
-import hust.soict.globalict.backend.touristattraction.naturalattraction.NaturalAttraction;
 
 public class BodyOfWater extends NaturalAttraction {
 	private String length;
