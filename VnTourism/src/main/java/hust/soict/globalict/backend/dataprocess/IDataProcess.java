@@ -49,12 +49,28 @@ public interface IDataProcess {
 
 				// Write it in raw file
 				results.write(out, "TURTLE");
+
+				// close the model
+				qExe.close();
+				results.close();
 			}
+
+			// close the file after use
+			out.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
 
+	// This functions deletes the raw ttl file
+	public default void deleteRawTtlFile() {
+		try {
+			Files.deleteIfExists(Paths.get(this.createRawFileName()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// This function collects data to an .ttl file
@@ -74,12 +90,19 @@ public interface IDataProcess {
 				FileWriter out = new FileWriter(this.createFileName());
 				results.write(out, "TURTLE");
 
+				// close the file after use
+				out.close();
+
 				// Write the data we extracted in stream to put in on UI screen
 				results.write(stream, "TURTLE");
 
 			} catch (Exception e) {
 				// Catch errors
 				e.printStackTrace(new PrintStream(stream));
+			} finally {
+				// close the model
+				qExe.close();
+				results.close();
 			}
 		} catch (Exception e) {
 			// Catch errors
@@ -87,14 +110,10 @@ public interface IDataProcess {
 		} finally {
 			// close the model
 			inModel.close();
-			inModel = null;
-			// Delete the raw file after extracting data from it
-			try {
-				Files.deleteIfExists(Paths.get(this.createRawFileName()));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+
+			// delete the raw file after extracting data from it
+			this.deleteRawTtlFile();
 		}
 	}
+
 }
