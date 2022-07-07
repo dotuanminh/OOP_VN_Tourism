@@ -1,10 +1,13 @@
 package hust.soict.globalict.backend.dataprocess;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
@@ -73,17 +76,25 @@ public interface IDataProcess {
 
 				// Write the data we extracted in stream to put in on UI screen
 				results.write(stream, "TURTLE");
-				
-				//Delete the raw file after extracting data from it
-				(new File(this.createRawFileName())).delete() ;  
-			} catch (IOException e) {
+
+			} catch (Exception e) {
 				// Catch errors
 				e.printStackTrace(new PrintStream(stream));
 			}
-
 		} catch (Exception e) {
 			// Catch errors
 			e.printStackTrace(new PrintStream(stream));
+		} finally {
+			// close the model
+			inModel.close();
+			inModel = null;
+			// Delete the raw file after extracting data from it
+			try {
+				Files.deleteIfExists(Paths.get(this.createRawFileName()));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 }
