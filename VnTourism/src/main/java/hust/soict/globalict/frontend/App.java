@@ -26,7 +26,7 @@ import javafx.stage.StageStyle;
 import java.io.ByteArrayOutputStream;
 import java.util.Optional;
 
-public class AppUI extends Application {
+public class App extends Application {
 	private ChoiceBox<String> manmadeChoiceBox = new ChoiceBox<String>();
 	private ChoiceBox<String> naturalChoiceBox = new ChoiceBox<String>();
 	private ChoiceBox<String> modernArchitectureChoiceBox = new ChoiceBox<String>();
