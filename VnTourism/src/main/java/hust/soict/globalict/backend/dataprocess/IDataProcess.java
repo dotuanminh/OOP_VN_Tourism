@@ -1,10 +1,13 @@
 package hust.soict.globalict.backend.dataprocess;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryFactory;
@@ -46,12 +49,28 @@ public interface IDataProcess {
 
 				// Write it in raw file
 				results.write(out, "TURTLE");
+
+				// close the model
+				qExe.close();
+				results.close();
 			}
+
+			// close the file after use
+			out.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
 
+	// This functions deletes the raw ttl file
+	public default void deleteRawTtlFile() {
+		try {
+			Files.deleteIfExists(Paths.get(this.createRawFileName()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// This function collects data to an .ttl file
@@ -71,19 +90,30 @@ public interface IDataProcess {
 				FileWriter out = new FileWriter(this.createFileName());
 				results.write(out, "TURTLE");
 
+				// close the file after use
+				out.close();
+
 				// Write the data we extracted in stream to put in on UI screen
 				results.write(stream, "TURTLE");
-				
-				//Delete the raw file after extracting data from it
-				(new File(this.createRawFileName())).delete() ;  
-			} catch (IOException e) {
+
+			} catch (Exception e) {
 				// Catch errors
 				e.printStackTrace(new PrintStream(stream));
+			} finally {
+				// close the model
+				qExe.close();
+				results.close();
 			}
-
 		} catch (Exception e) {
 			// Catch errors
 			e.printStackTrace(new PrintStream(stream));
+		} finally {
+			// close the model
+			inModel.close();
+
+			// delete the raw file after extracting data from it
+			this.deleteRawTtlFile();
 		}
 	}
+
 }
