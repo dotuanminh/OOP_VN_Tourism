@@ -389,10 +389,10 @@ public class App extends Application {
 					task.setOnFailed(event -> {
 						Alert notify = new Alert(Alert.AlertType.WARNING);
 						notify.setHeaderText("Task failed");
-						notify.setContentText("An error has occurred. See the output dialog for more details");
+						notify.setContentText("An error has occurred.");
 						notify.show();
 						// return the error log here....
-						textArea.setText(stream.toString());
+						textArea.setText("");
 						alert.setHeaderText("Failed");
 					});
 
